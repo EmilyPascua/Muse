@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
+    defaultConfig {
+        applicationId "umbrella.com.muse"
+        minSdkVersion 18
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+
+    //Design library for Coordinator Layout and Toolbars
+    implementation 'com.android.support:design:27.1.1'
+
+    //BottomNavigationViewEx library
+    implementation 'com.github.ittianyu:BottomNavigationViewEx:1.1.9'
+
+    //Circle ImageView
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+
+    //Universal image loader
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
+    //firebase authentication
+    implementation 'com.google.firebase:firebase-auth:16.0.5'
+
+    //firebase database
+    implementation 'com.google.firebase:firebase-database:16.0.4'
+
+    //firebase storage
+    implementation 'com.google.firebase:firebase-storage:16.0.4'
+
+    //firevase core
+    implementation 'com.google.firebase:firebase-core:16.0.4'
+
+
+}
+
+//Firebase
+apply plugin: 'com.google.gms.google-services'
