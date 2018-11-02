@@ -30,6 +30,8 @@ import umbrella.com.muse.Utils.SectionsPagerAdapter;
 import umbrella.com.muse.Utils.UniversalImageLoader;
 import umbrella.com.muse.Utils.ViewCommentsFragment;
 
+// Marco Aguilar's branch!
+
 public class HomeActivity extends AppCompatActivity implements
         MainfeedListAdapter.OnLoadMoreItemsListener {
 
