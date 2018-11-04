@@ -23,12 +23,12 @@
 
     </RelativeLayout>
 
-    <ProgressBar
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:id="@+id/profileProgressBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"/>
+    <!--<ProgressBar-->
+        <!--android:layout_width="150dp"-->
+        <!--android:layout_height="150dp"-->
+        <!--android:id="@+id/profileProgressBar"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="100dp"/>-->
 
     <include layout="@layout/layout_bottom_navigation_view"/>
 
