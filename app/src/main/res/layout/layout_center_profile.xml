@@ -105,6 +105,7 @@
                 android:layout_marginBottom="50dp"
                 >
 
+                <!--This is going to be referenced in ProfileFragment-->
                 <GridView
                     android:id="@+id/gridView"
                     android:layout_width="match_parent"

@@ -148,6 +148,8 @@ public class ProfileFragment extends Fragment {
         super.onAttach(context);
     }
 
+    // Going to be used in the User's profile, 3x3 GridView the displays all of the user's posts
+    // Database structure seems like it would be "user_photos -> userID (obtained through FirebaseAuth method)"
     private void setupGridView(){
         Log.d(TAG, "setupGridView: Setting up image grid.");
 

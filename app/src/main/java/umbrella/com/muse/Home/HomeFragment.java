@@ -1,5 +1,6 @@
 package umbrella.com.muse.Home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +25,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
+import umbrella.com.muse.Login.LoginActivity;
 import umbrella.com.muse.R;
 import umbrella.com.muse.Utils.MainfeedListAdapter;
 import umbrella.com.muse.models.Comment;
@@ -56,6 +59,11 @@ public class HomeFragment extends Fragment {
         mFollowing = new ArrayList<>();
         mPhotos = new ArrayList<>();
 
+        // This method crashes the app because FirebaseAuth.getInstance().getCurrentUser() is
+        // null and calling getUid() on null will crash the app. Not sure how to get around this.
+        // Already tried to stop the program from entering this section if the user isn't signed in
+
+        // An intent won't prevent this from executing
         getFollowing();
 
         return view;
@@ -88,6 +96,8 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+
 
     private void getPhotos(){
         Log.d(TAG, "getPhotos: getting photos");

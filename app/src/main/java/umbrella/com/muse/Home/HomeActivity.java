@@ -158,6 +158,18 @@ public class HomeActivity extends AppCompatActivity implements
     ------------------------------------ Firebase ---------------------------------------------
      */
 
+     /*
+        BUG: CheckCurrentUser works and if-statement is entered, but the LoginActivity is never
+             started if the user isn't signed in (null). Inside AndroidManifest, HomeActivity is set as
+             our main Launcher Activity, but this checkCurrentUser() doesn't send the user to LoginActivity
+             if he/she isn't signed in. As a result, HomeFragment's onCreateView() is called, which then calls
+             getFollowing(), and inside this method we get a NullPointerException when calling
+             FirebaseAuth.getInstance().getCurrentUser().getUid().
+
+             The problem might be
+
+      */
+
     /**
      * checks to see if the @param 'user' is logged in
      * @param user
@@ -166,6 +178,7 @@ public class HomeActivity extends AppCompatActivity implements
          Log.d(TAG, "checkCurrentUser: checking if user is logged in.");
 
          if(user == null){
+             Log.d(TAG, "User is " + user);
              Intent intent = new Intent(mContext, LoginActivity.class);
              startActivity(intent);
          }
@@ -192,6 +205,7 @@ public class HomeActivity extends AppCompatActivity implements
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
+                    checkCurrentUser(mAuth.getCurrentUser());
                 }
                 // ...
             }

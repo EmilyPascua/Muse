@@ -71,6 +71,11 @@ public class FirebaseMethods {
         }
     }
 
+
+    /*
+        This method seems like it's going to upload photo onto Firebase Storage, using FilePaths
+        to configure directory.
+     */
     public void uploadNewPhoto(String photoType, final String caption,final int count, final String imgUrl,
                                Bitmap bm){
         Log.d(TAG, "uploadNewPhoto: attempting to upload new photo.");
@@ -341,6 +346,12 @@ public class FirebaseMethods {
 
     }
 
+
+    /*
+        This method isn't being called anywhere. Also, inside RegisterActivity there's already
+        a "checkIfUsernameExists()" method
+     */
+
 //    public boolean checkIfUsernameExists(String username, DataSnapshot datasnapshot){
 //        Log.d(TAG, "checkIfUsernameExists: checking if " + username + " already exists.");
 //
@@ -386,6 +397,8 @@ public class FirebaseMethods {
                             sendVerificationEmail();
 
                             userID = mAuth.getCurrentUser().getUid();
+
+
                             Log.d(TAG, "onComplete: Authstate changed: " + userID);
                         }
 
@@ -420,6 +433,11 @@ public class FirebaseMethods {
      * @param website
      * @param profile_photo
      */
+
+    /*
+        ***** This method won't work unless you update your "Rules" for your database on Firebase.
+        ***** Must have read/write set to "True" or else this method won't be able to update your database
+     */
     public void addNewUser(String email, String username, String description, String website, String profile_photo){
 
         User user = new User( userID,  1,  email,  StringManipulation.condenseUsername(username) );
@@ -427,6 +445,7 @@ public class FirebaseMethods {
         myRef.child(mContext.getString(R.string.dbname_users))
                 .child(userID)
                 .setValue(user);
+        Log.d(TAG, "" + userID);
 
 
         UserAccountSettings settings = new UserAccountSettings(
@@ -551,44 +570,6 @@ public class FirebaseMethods {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
