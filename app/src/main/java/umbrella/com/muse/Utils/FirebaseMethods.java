@@ -346,6 +346,16 @@ public class FirebaseMethods {
 
     }
 
+    // Adding method to update phone_number under "Users" node on Firebase
+    public void updatePhoneNumber(long phone_number) {
+        Log.d(TAG, "updatePhoneNumber: updating phoneNumber to: " + phone_number);
+
+        myRef.child(mContext.getString(R.string.dbname_users))
+                .child(userID)
+                .child(mContext.getString(R.string.field_phone_number))
+                .setValue(phone_number);
+    }
+
 
     /*
         This method isn't being called anywhere. Also, inside RegisterActivity there's already

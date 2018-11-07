@@ -74,7 +74,7 @@ public class GalleryFragment extends Fragment {
             }
         });
 
-
+        // (Part 48)
         TextView nextScreen = (TextView) view.findViewById(R.id.tvNext);
         nextScreen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,25 +113,39 @@ public class GalleryFragment extends Fragment {
     private void init(){
         FilePaths filePaths = new FilePaths();
 
-        //check for other folders indide "/storage/emulated/0/pictures"
+        //check for other folders inside "/storage/emulated/0/pictures"
+        // If there are directories under /pictures directory, add their absolute paths
+        // to directories
         if (FileSearch.getDirectoryPaths(filePaths.PICTURES) != null) {
             directories = FileSearch.getDirectoryPaths(filePaths.PICTURES);
         }
+
+        // Also adding /storage/emulated/0/DCIM/camera (I'm assuming that..since we don't check for null,
+        // this directory must exist on all devices)
         directories.add(filePaths.CAMERA);
 
+        // (Part 48) Shortening absolute paths items displayed on Spinner
         ArrayList<String> directoryNames = new ArrayList<>();
         for (int i = 0; i < directories.size(); i++) {
             Log.d(TAG, "init: directory: " + directories.get(i));
             int index = directories.get(i).lastIndexOf("/");
-            String string = directories.get(i).substring(index);
+            String string = directories.get(i).substring(index).replace("/", " ");
             directoryNames.add(string);
         }
 
+        /*
+            References to layouts that begin with "android.R.layout" are built-in XML layout documents
+            that are part of the Android OS. (The more you learn!).
+
+            Setting up directorySpinner with directories we collected (apparently it needs an adapter).
+         */
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, directoryNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         directorySpinner.setAdapter(adapter);
 
+
+        // Used to get directory of Item selected on spinner (via position)
         directorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -149,6 +163,7 @@ public class GalleryFragment extends Fragment {
     }
 
 
+    // (Part 47)
     private void setupGridView(String selectedDirectory){
         Log.d(TAG, "setupGridView: directory chosen: " + selectedDirectory);
         final ArrayList<String> imgURLs = FileSearch.getFilePaths(selectedDirectory);
@@ -170,6 +185,13 @@ public class GalleryFragment extends Fragment {
             Log.e(TAG, "setupGridView: ArrayIndexOutOfBoundsException: " +e.getMessage() );
         }
 
+
+        /*
+            When user selects an image from the GridView, that image will be displayed in the
+            giant ImageView "galleryImage".
+
+            mSelectedImage (Part 48)
+         */
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

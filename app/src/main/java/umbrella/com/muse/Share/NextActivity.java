@@ -31,6 +31,7 @@ import umbrella.com.muse.Utils.UniversalImageLoader;
  * Created by User on 7/24/2017.
  */
 
+// (Part 48)
 public class NextActivity extends AppCompatActivity {
 
     private static final String TAG = "NextActivity";

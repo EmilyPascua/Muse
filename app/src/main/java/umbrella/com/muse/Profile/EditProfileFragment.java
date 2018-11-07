@@ -220,9 +220,16 @@ public class EditProfileFragment extends Fragment implements
             //update description
             mFirebaseMethods.updateUserAccountSettings(null, null, description, 0);
         }
-        if(!mUserSettings.getSettings().getProfile_photo().equals(phoneNumber)){
-            //update phoneNumber
+
+        // BUG (FIXED): Users can now update their phone numbers
+        // BUG: Since phone_number is stored as a Long, users cannot update number number with
+        //      format: 123-456-7891 or (213)-555-5555
+
+        // Updating phone_number under "user_account_setting" and "users" on Firebase
+        if(mUserSettings.getUser().getPhone_number() != phoneNumber) {
+            Log.d(TAG, "PhoneNumber: " + phoneNumber);
             mFirebaseMethods.updateUserAccountSettings(null, null, null, phoneNumber);
+            mFirebaseMethods.updatePhoneNumber(phoneNumber);
         }
     }
 
