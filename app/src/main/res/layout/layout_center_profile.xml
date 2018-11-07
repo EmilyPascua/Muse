@@ -1,6 +1,6 @@
 <merge xmlns:tools="http://schemas.android.com/tools"
-       xmlns:app="http://schemas.android.com/apk/res-auto"
-       xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -8,7 +8,13 @@
         android:background="@color/white">
 
 
+    <RelativeLayout
+        android:id="@+id/relLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
 
+        <include layout="@layout/snippet_top_profilebar"/>
+    </RelativeLayout>
         <!-- ********************Middle Section*************************** -->
 
         <RelativeLayout
@@ -128,26 +134,4 @@
     </RelativeLayout>
 
 </merge>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
