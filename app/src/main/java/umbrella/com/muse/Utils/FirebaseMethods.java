@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,6 +27,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -72,10 +74,7 @@ public class FirebaseMethods {
     }
 
 
-    /*
-        This method seems like it's going to upload photo onto Firebase Storage, using FilePaths
-        to configure directory.
-     */
+    // (Part 52)
     public void uploadNewPhoto(String photoType, final String caption,final int count, final String imgUrl,
                                Bitmap bm){
         Log.d(TAG, "uploadNewPhoto: attempting to upload new photo.");
@@ -86,10 +85,13 @@ public class FirebaseMethods {
             Log.d(TAG, "uploadNewPhoto: uploading NEW photo.");
 
             String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            StorageReference storageReference = mStorageReference
-                    .child(filePaths.FIREBASE_IMAGE_STORAGE + "/" + user_id + "/photo" + (count + 1));
+            // Declaring path of Storage on Firebase Storage
+            final StorageReference storageReference = mStorageReference
+                    .child(filePaths.FIREBASE_IMAGE_STORAGE + user_id + "/photo" + (count + 1));
 
-            //convert image url to bitmap
+            Log.d(TAG, "Firebase storage reference: " + storageReference.toString());
+
+            // (Part 53) convert image url to bitmap
             if(bm == null){
                 bm = ImageManager.getBitmap(imgUrl);
             }
@@ -99,12 +101,58 @@ public class FirebaseMethods {
             UploadTask uploadTask = null;
             uploadTask = storageReference.putBytes(bytes);
 
-//            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+            // (Part 54)
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 //                    Uri firebaseUrl = taskSnapshot.getDownloadUrl();
+
+                    Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
+
+                    //add the new photo to 'photos' node and 'user_photos' node
+                    //addPhotoToDatabase(caption, firebaseUrl.toString());
+
+                    //navigate to the main feed so the user can see their photo
+//                    Intent intent = new Intent(mContext, HomeActivity.class);
+//                    mContext.startActivity(intent);
+                }
+            }).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return storageReference.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        addPhotoToDatabase(caption, downloadUri.toString());
+                        Intent intent = new Intent(mContext, HomeActivity.class);
+                        mContext.startActivity(intent);
+                    } else {
+                        // Handle failures
+                        Log.d(TAG, "Couldn't get download url");
+                    }
+                }
+            });
+
+
+
+
+//            Log.d(TAG, "FUll PATH" + filePaths.FIREBASE_IMAGE_STORAGE + user_id + "/photo" + (count + 1));
+//            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                @Override
+//                public void onSuccess(Uri uri) {
+//                    Uri firebaseUrl = uri;
 //
 //                    Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
+//
+//                    setProfilePhoto(firebaseUrl.toString());
 //
 //                    //add the new photo to 'photos' node and 'user_photos' node
 //                    addPhotoToDatabase(caption, firebaseUrl.toString());
@@ -113,34 +161,15 @@ public class FirebaseMethods {
 //                    Intent intent = new Intent(mContext, HomeActivity.class);
 //                    mContext.startActivity(intent);
 //                }
-//            });
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    // **********************
 //
-
-
-
-            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    Uri firebaseUrl = uri;
-
-                    Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
-
-                    setProfilePhoto(firebaseUrl.toString());
-
-                    //add the new photo to 'photos' node and 'user_photos' node
-                    addPhotoToDatabase(caption, firebaseUrl.toString());
-
-                    //navigate to the main feed so the user can see their photo
-                    Intent intent = new Intent(mContext, HomeActivity.class);
-                    mContext.startActivity(intent);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.d(TAG, "onFailure: Photo upload failed.");
-                    Toast.makeText(mContext, "Photo upload failed ", Toast.LENGTH_SHORT).show();
-                }
-            });
+//                    Log.d(TAG, "onFailure: Photo upload failed.");
+//                    Toast.makeText(mContext, "Photo upload failed ", Toast.LENGTH_SHORT).show();
+//                }
+//            });
 
 
 
@@ -151,8 +180,14 @@ public class FirebaseMethods {
 
 
             String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            StorageReference storageReference = mStorageReference
-                    .child(filePaths.FIREBASE_IMAGE_STORAGE + "/" + user_id + "/profile_photo");
+            // Removed "/" (because FIREBASE_IMAGE_STORAGE = /photos/users/)
+            // We kept using /photos/users//user_id/profile_photo
+            final StorageReference storageReference = mStorageReference
+                    .child(filePaths.FIREBASE_IMAGE_STORAGE + user_id + "/profile_photo");
+
+
+
+            Log.d(TAG, "FUll PATH" + filePaths.FIREBASE_IMAGE_STORAGE + user_id + "/profile_photo");
 
             //convert image url to bitmap
             if(bm == null){
@@ -160,48 +195,23 @@ public class FirebaseMethods {
             }
             byte[] bytes = ImageManager.getBytesFromBitmap(bm, 100);
 
-            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    Uri firebaseUrl = uri;
 
-                    Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
+//      Someone must have tried to create this to get around taskSnapshot's deprecated getDownloadUrl()
+//      method:
 
-                    setProfilePhoto(firebaseUrl.toString());
-
-                    ((AccountSettingsActivity)mContext).setViewPager(
-                            ((AccountSettingsActivity)mContext).pagerAdapter
-                                    .getFragmentNumber(mContext.getString(R.string.edit_profile_fragment))
-                    );
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.d(TAG, "onFailure: Photo upload failed.");
-                    Toast.makeText(mContext, "Photo upload failed ", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-
-//
-//            UploadTask uploadTask = null;
-//            uploadTask = storageReference.putBytes(bytes);
-//
-//            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 //                @Override
-//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Uri firebaseUrl = taskSnapshot.getDownloadUrl();
+//                public void onSuccess(Uri uri) {
+//                    Uri firebaseUrl = uri;
 //
 //                    Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
 //
-//                    //insert into 'user_account_settings' node
 //                    setProfilePhoto(firebaseUrl.toString());
 //
 //                    ((AccountSettingsActivity)mContext).setViewPager(
 //                            ((AccountSettingsActivity)mContext).pagerAdapter
 //                                    .getFragmentNumber(mContext.getString(R.string.edit_profile_fragment))
 //                    );
-//
 //                }
 //            }).addOnFailureListener(new OnFailureListener() {
 //                @Override
@@ -209,19 +219,70 @@ public class FirebaseMethods {
 //                    Log.d(TAG, "onFailure: Photo upload failed.");
 //                    Toast.makeText(mContext, "Photo upload failed ", Toast.LENGTH_SHORT).show();
 //                }
-//            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-//                    double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-//
-//                    if(progress - 15 > mPhotoUploadProgress){
-//                        Toast.makeText(mContext, "photo upload progress: " + String.format("%.0f", progress) + "%", Toast.LENGTH_SHORT).show();
-//                        mPhotoUploadProgress = progress;
-//                    }
-//
-//                    Log.d(TAG, "onProgress: upload progress: " + progress + "% done");
-//                }
 //            });
+
+
+//
+            UploadTask uploadTask = null;
+            uploadTask = storageReference.putBytes(bytes);
+
+            // Added continueWithTask and addOnCompleteListener
+            // Documentation: https://firebase.google.com/docs/storage/android/upload-files#upload_files
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
+
+                    // Moving this line to "onComplete()" method since we're able to retrieve
+                    // the download URI for the photo recently uploaded to Firebase
+                    // setProfilePhoto(firebaseUrl);
+
+                    ((AccountSettingsActivity)mContext).setViewPager(
+                            ((AccountSettingsActivity)mContext).pagerAdapter
+                                    .getFragmentNumber(mContext.getString(R.string.edit_profile_fragment))
+                    );
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d(TAG, "onFailure: Photo upload failed.");
+                    Toast.makeText(mContext, "Photo upload failed ", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+
+                    if(progress - 15 > mPhotoUploadProgress){
+                        Toast.makeText(mContext, "photo upload progress: " + String.format("%.0f", progress) + "%", Toast.LENGTH_SHORT).show();
+                        mPhotoUploadProgress = progress;
+                    }
+
+                    Log.d(TAG, "onProgress: upload progress: " + progress + "% done");
+                }
+            }).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return storageReference.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        setProfilePhoto(downloadUri.toString());
+                    } else {
+                        // Handle failures
+                        Log.d(TAG, "Couldn't get download url");
+                    }
+                }
+            });
         }
 
     }
@@ -262,6 +323,7 @@ public class FirebaseMethods {
 
     }
 
+    // (Part 51) Increments count for each photo under a specific userID (user_photo -> userID -> photoID)
     public int getImageCount(DataSnapshot dataSnapshot){
         int count = 0;
         for(DataSnapshot ds: dataSnapshot

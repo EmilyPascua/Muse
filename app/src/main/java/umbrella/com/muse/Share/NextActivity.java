@@ -73,6 +73,7 @@ public class NextActivity extends AppCompatActivity {
 
 
         TextView share = (TextView) findViewById(R.id.tvShare);
+        // (Part 52)
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,7 +170,8 @@ public class NextActivity extends AppCompatActivity {
             }
         };
 
-
+        // (Part 51) mrRef.addValueEventListener{...} will run as soon as the Activity is started
+        // imageCount holds the number of photos owned by a specific user
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
