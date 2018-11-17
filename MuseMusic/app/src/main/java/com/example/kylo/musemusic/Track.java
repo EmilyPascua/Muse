@@ -1,15 +1,16 @@
 package com.example.kylo.musemusic;
 
 public class Track {
-    private int trackId;
-    private int artistId;
+    private String trackId;
+    private String artistId;
+    private String albumId;
     private int playbackInSeconds;
     private String trackName;
     private String trackArtist;
     private String previewUrl;
     private String albumUrl;
 
-    public Track(int trackId, int albumId,  int artistId, int playbackInSeconds, String trackName, String trackArtist, String previewUrl){
+    public Track(String trackId, String albumId,  String artistId, int playbackInSeconds, String trackName, String trackArtist, String previewUrl){
         //Use the artId to get the album Url picture
         this.trackId = trackId;
         this.playbackInSeconds = playbackInSeconds;
@@ -18,55 +19,69 @@ public class Track {
         this.previewUrl = previewUrl;
         this.albumUrl = "http://direct.napster.com/imageserver/v2/albums/Alb."+ albumId + "/images/500x500.jpg";
         this.artistId = artistId;
+        this.albumId = albumId;
     }
 
-    private int getTrackId(){
+    public String getTrackId(){
         return trackId;
     }
 
-    private void setTrackId(int trackId){
+    public void setTrackId(String trackId){
         this.trackId = trackId;
     }
 
-    private int getPlaybackInSeconds(){
+    public int getPlaybackInSeconds(){
         return playbackInSeconds;
     }
 
-    private void setPlaybackInSeconds(int playbackInSeconds){
+    public void setPlaybackInSeconds(int playbackInSeconds){
         this.playbackInSeconds = playbackInSeconds;
     }
 
-    private String getTrackName(){
+    public String getTrackName(){
         return trackName;
     }
 
-    private void setTrackName(String trackName){
+    public void setTrackName(String trackName){
         this.trackName = trackName;
     }
 
-    private String getTrackArtist(){
+    public String getTrackArtist(){
         return trackArtist;
     }
 
-    private void setTrackArtist(String trackArtist){
+    public void setTrackArtist(String trackArtist){
      this.trackArtist = trackArtist;
     }
 
 
-    private String getPreviewUrl(){
+    public String getPreviewUrl(){
         return previewUrl;
     }
 
-    private void setPreviewUrl(String previewUrl){
+    public void setPreviewUrl(String previewUrl){
         this.previewUrl = previewUrl;
     }
 
-    private String getAlbumUrl(){
+    public String getAlbumUrl(){
         return albumUrl;
     }
 
-    private void setAlbumUrl(String albumUrl){
+    public void setAlbumUrl(String albumUrl){
         this.albumUrl = albumUrl;
     }
 
+    public String getArtistId(){
+        return artistId;
+    }
+
+    public void setArtistId(String artistId){
+        this.artistId = artistId;
+    }
+
+    public String getAlbumId(){
+       return albumId;
+    }
+
+    public void setAlbumId(String albumId){ this.albumId = albumId;}
 }

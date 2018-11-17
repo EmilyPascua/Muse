@@ -25,15 +25,13 @@ public class NetworkUtils {
     //Name of Track
     final static String QUERY_PARAM = "query";
 
-    //Default always track
-    final static String TYPE_PARAM = "type";
-    final static String type = "track";
-
     public static URL buildUrl(String query){
+        Log.e(" Query", query);
+
         Uri builtUri = Uri.parse(MUSIC_BASE_URL).buildUpon()
                 .appendQueryParameter(API_KEY_PARAM, API_KEY)
                 .appendQueryParameter(QUERY_PARAM, query)
-                .appendQueryParameter(TYPE_PARAM, type)
+                .appendQueryParameter("type", "track")
                 .build();
         URL url = null;
         try{
@@ -41,7 +39,7 @@ public class NetworkUtils {
         }catch(MalformedURLException e){
             e.printStackTrace();
         }
-        Log.v(TAG, "Built URI" + url);
+        Log.e("Built Query", url.toString());
         return url;
     }
 
