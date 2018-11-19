@@ -2,11 +2,15 @@ package com.example.kylo.musemusic;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -41,23 +45,26 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
     }
 
     public class MusicHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView albumUrl;
+        ImageView albumUrl;
         TextView trackName;
         TextView trackArtist;
+        TextView previewUrl;
 //        track_artist
 //                track_name
 //        album_url
         public MusicHolder(View itemView) {
             super(itemView);
-            albumUrl = (TextView) itemView.findViewById(R.id.track_artist);
+            albumUrl = (ImageView) itemView.findViewById(R.id.album_url);
             trackName = (TextView) itemView.findViewById(R.id.track_name);
-            trackArtist = (TextView) itemView.findViewById(R.id.album_url);
+            trackArtist = (TextView) itemView.findViewById(R.id.track_artist);
+            previewUrl = (TextView) itemView.findViewById(R.id.preview_url);
         }
 
         void bind(final int listIndex) {
-            albumUrl.setText(mTrack.get(listIndex).getAlbumUrl());
+            Picasso.with(mContext).load(mTrack.get(listIndex).getAlbumUrl()).into(albumUrl);
             trackName.setText(mTrack.get(listIndex).getTrackName());
             trackArtist.setText(mTrack.get(listIndex).getTrackArtist());
+            previewUrl.setText(mTrack.get(listIndex).getPreviewUrl());
             itemView.setOnClickListener(this);
         }
 

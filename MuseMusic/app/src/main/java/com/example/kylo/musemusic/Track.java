@@ -17,7 +17,7 @@ public class Track {
         this.trackName = trackName;
         this.trackArtist = trackArtist;
         this.previewUrl = previewUrl;
-        this.albumUrl = "http://direct.napster.com/imageserver/v2/albums/Alb."+ albumId + "/images/500x500.jpg";
+        this.albumUrl = "http://direct.napster.com/imageserver/v2/albums/"+ albumId + "/images/500x500.jpg";
         this.artistId = artistId;
         this.albumId = albumId;
     }

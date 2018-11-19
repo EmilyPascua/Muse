@@ -15,6 +15,7 @@
  */
 package com.example.kylo.musemusic;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -27,6 +28,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import java.io.IOException;
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if(savedInstanceState != null && savedInstanceState.containsKey(SEARCH_QUERY_RESULTS)){
+            repos.clear();
             String searchResults = savedInstanceState.getString(SEARCH_QUERY_RESULTS);
             populateRecyclerView(searchResults);
         }
@@ -110,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void populateRecyclerView(String searchResults){
         Log.d("mycode", searchResults);
         repos = JsonUtils.parseNews(searchResults);
+        mAdapter.mTrack.clear();
         mAdapter.mTrack.addAll(repos);
         mAdapter.notifyDataSetChanged();
     }
