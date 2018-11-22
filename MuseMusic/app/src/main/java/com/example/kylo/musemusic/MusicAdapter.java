@@ -1,11 +1,9 @@
 package com.example.kylo.musemusic;
 
 import android.content.Context;
-import android.content.Intent;
 import android.media.AudioManager;
-import android.media.Image;
 import android.media.MediaPlayer;
-import android.net.Uri;
+import android.nfc.Tag;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +16,6 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>{
@@ -55,57 +52,72 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
         ImageView albumUrl;
         TextView trackName;
         TextView trackArtist;
-        TextView previewUrl;
         Button playButton;
         MediaPlayer mediaPlayer = new MediaPlayer();
 
-        //        track_artist
-//                track_name
-//        album_url
         public MusicHolder(View itemView) {
             super(itemView);
             playButton = (Button) itemView.findViewById(R.id.play_button);
             albumUrl = (ImageView) itemView.findViewById(R.id.album_url);
             trackName = (TextView) itemView.findViewById(R.id.track_name);
             trackArtist = (TextView) itemView.findViewById(R.id.track_artist);
-            previewUrl = (TextView) itemView.findViewById(R.id.preview_url);
         }
 
         void bind(final int listIndex) {
             Picasso.with(mContext).load(mTrack.get(listIndex).getAlbumUrl()).into(albumUrl);
+            createMediaPlayer(mTrack.get(listIndex).getPreviewUrl(), 100);
             playButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    if(!mediaPlayer.isPlaying()){
-                        mediaPlayer.start();
-                        playButton.setBackgroundResource(R.drawable.ic_pause_black_24dp);
+                    if(mediaPlayer.isPlaying()){
+                        if(mediaPlayer!=null){
+                            mediaPlayer.pause();
+                            // Changing button image to play button
+                            playButton.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp);
+                        }
                     }else{
-                        mediaPlayer.pause();
-                        playButton.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp);
+                        // Resume song
+                        if(mediaPlayer!=null){
+                            mediaPlayer.start();
+                            // Changing button image to pause button
+                            playButton.setBackgroundResource(R.drawable.ic_pause_black_24dp);
+                        }
                     }
                 }
             });
-
             trackName.setText(mTrack.get(listIndex).getTrackName());
-            trackArtist.setText(mTrack.get(listIndex).getTrackArtist());
-            previewUrl.setText(mTrack.get(listIndex).getPreviewUrl());
+            trackArtist.setText("By " + mTrack.get(listIndex).getTrackArtist());
             itemView.setOnClickListener(this);
         }
 
         void createMediaPlayer(String track, int playBack){
-            try{
+//            try{
+//                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+//                mediaPlayer.setDataSource(track);
+//                mediaPlayer.prepareAsync(); // might take long! (for buffering, etc)
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
+            Toast.makeText(mContext,"Play Song", Toast.LENGTH_LONG);
+            try {
+                mediaPlayer.reset();
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 mediaPlayer.setDataSource(track);
-                mediaPlayer.prepare(); // might take long! (for buffering, etc)
-            }catch (Exception e){
+                mediaPlayer.prepareAsync();
+                mediaPlayer.start();
+
+                // Changing Button Image to pause image
+                playButton.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp);
+            } catch (Exception e){
                 e.printStackTrace();
             }
         }
 
+
         @Override
         public void onClick(View view) {
-//            mediaPlayer.start();
+            String in1 = mTrack.get(getAdapterPosition()).getTrackArtist();
+            Log.d("Infomration", in1);
         }
     }
 }
