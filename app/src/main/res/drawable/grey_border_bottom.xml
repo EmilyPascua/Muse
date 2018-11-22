@@ -6,13 +6,14 @@
             android:shape="rectangle">
             <solid android:color="@color/grey"/>
         </shape>
-
-
     </item>
+
     <item
         android:bottom="1dp">
         <shape android:shape="rectangle">
             <solid android:color="@color/white"/>
         </shape>
+
     </item>
+
 </layer-list>

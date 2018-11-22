@@ -5,20 +5,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home.HomeActivity">
+    tools:context="tabian.com.instagramclone2.Home.HomeActivity">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/container">
+
+    </FrameLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <!-- top toolbar-->
+        android:layout_height="match_parent"
+        android:id="@+id/relLayoutParent">
+
+
+        <!-- top toolbar -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/relLayout1">
 
             <include layout="@layout/layout_top_tabs"/>
+
         </RelativeLayout>
-        <!-- middle section (body)-->
+
+        <!-- Middle section (body) -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -27,9 +40,15 @@
 
             <include layout="@layout/layout_center_viewpager"/>
 
+
         </RelativeLayout>
-        <!-- bottom navigation-->
+
+
+        <!-- bottom navigation -->
         <include layout="@layout/layout_bottom_navigation_view"/>
+
+
     </RelativeLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>

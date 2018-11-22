@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/layout_center_profile"/>
-        <include layout='@layout/layout_bottom_navigation_view'/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/container">
+
+        </FrameLayout>
+
     </RelativeLayout>
 
-    <android.support.v4.widget.ContentLoadingProgressBar
-        android:id="@+id/profileProgressBar"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-
-        android:layout_marginTop="100dp" />
 </android.support.design.widget.CoordinatorLayout>
