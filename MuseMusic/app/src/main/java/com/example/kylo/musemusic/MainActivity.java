@@ -26,8 +26,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
@@ -43,10 +41,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final int LOADER_ID = 1;
     private static final String SEARCH_QUERY_URL_EXTRA = "searchQuery";
     private static final String SEARCH_QUERY_RESULTS = "searchResults";
-    private String gitHubSearchResults;
+    private String musicQueryResults;
     private RecyclerView mRecyclerView;
     private MusicAdapter mAdapter;
-    private ArrayList<Track> repos = new ArrayList<>();
+    private ArrayList<Track> tracks = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +53,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mSearchBoxEditText = (EditText) findViewById(R.id.et_search_box);
         mProgressBar = (ProgressBar) findViewById(R.id.progress);
         mRecyclerView = (RecyclerView)findViewById(R.id.my_recycler_view);
-        mAdapter = new MusicAdapter(this, repos);
+        mAdapter = new MusicAdapter(this, tracks);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if(savedInstanceState != null && savedInstanceState.containsKey(SEARCH_QUERY_RESULTS)){
-            repos.clear();
+            tracks.clear();
             String searchResults = savedInstanceState.getString(SEARCH_QUERY_RESULTS);
             populateRecyclerView(searchResults);
         }
@@ -69,14 +67,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(SEARCH_QUERY_RESULTS, gitHubSearchResults);
+        outState.putString(SEARCH_QUERY_RESULTS, musicQueryResults);
 
     }
 
     private URL makeSearchUrl() {
-        String githubQuery = mSearchBoxEditText.getText().toString();
-        URL githubSearchUrl = NetworkUtils.buildUrl(githubQuery);
-        return githubSearchUrl;
+        String napsterQuery = mSearchBoxEditText.getText().toString();
+        URL napsterSearchUrl = NetworkUtils.buildUrl(napsterQuery);
+        return napsterSearchUrl;
     }
 
     @Override
@@ -93,8 +91,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             Bundle bundle = new Bundle();
             bundle.putString(SEARCH_QUERY_URL_EXTRA, url.toString());
             LoaderManager loaderManager = getSupportLoaderManager();
-            Loader<String> gitHubSearchLoader = loaderManager.getLoader(LOADER_ID);
-            if(gitHubSearchLoader == null){
+            Loader<String> searchLoader = loaderManager.getLoader(LOADER_ID);
+            if(searchLoader == null){
                 loaderManager.initLoader(LOADER_ID, bundle, this).forceLoad();
             }else{
                 loaderManager.restartLoader(LOADER_ID, bundle, this).forceLoad();
@@ -112,9 +110,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public void populateRecyclerView(String searchResults){
         Log.d("mycode", searchResults);
-        repos = JsonUtils.parseNews(searchResults);
+        tracks = JsonUtils.parseNews(searchResults);
         mAdapter.mTrack.clear();
-        mAdapter.mTrack.addAll(repos);
+        mAdapter.mTrack.addAll(tracks);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -138,18 +136,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             public String loadInBackground() {
                 Log.d(TAG, "loadInBackground called");
 
-                String githubSearchQuery = args.getString(SEARCH_QUERY_URL_EXTRA);
-                if(githubSearchQuery == null || githubSearchQuery.isEmpty()){
+                String napsterSearchQuery = args.getString(SEARCH_QUERY_URL_EXTRA);
+                if(napsterSearchQuery == null || napsterSearchQuery.isEmpty()){
                     return null;
                 }
                 try {
                     Log.d(TAG, "begin network call");
-                    gitHubSearchResults = NetworkUtils.getResponseFromHttpUrl(new URL(githubSearchQuery));
+                    musicQueryResults = NetworkUtils.getResponseFromHttpUrl(new URL(napsterSearchQuery));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Log.d(TAG, gitHubSearchResults);
-                return gitHubSearchResults;
+                Log.d(TAG, musicQueryResults);
+                return musicQueryResults;
             }
         };
     }

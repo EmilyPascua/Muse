@@ -3,15 +3,11 @@ package com.example.kylo.musemusic;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.nfc.Tag;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -120,26 +116,19 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //Just filler information
                     Log.e("Information",mTrack.get(listIndex).getTrackArtist());
-                }
-            });
-            addButton.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        addButton.setBackgroundResource(R.drawable.ic_add_circle_black_24dp);
-                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                        addButton.setBackgroundResource(R.drawable.ic_add_circle_outline_black_24dp);
-                    }
-                    return false;
+                    Log.e("Information",mTrack.get(listIndex).getTrackName());
+                    Log.e("Information",mTrack.get(listIndex).getPreviewUrl());
+                    Log.e("Information",mTrack.get(listIndex).getAlbumUrl());
+                    Log.e("Information",mTrack.get(listIndex).getArtistId());
+                    Log.e("Information",mTrack.get(listIndex).getTrackArtist());
                 }
             });
         }
 
         @Override
         public void onClick(View view) {
-            String in1 = mTrack.get(getAdapterPosition()).getTrackArtist();
-            Log.d("Infomration", in1);
         }
 
     }
