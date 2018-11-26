@@ -15,6 +15,9 @@
  */
 package com.example.kylo.musemusic;
 
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -22,12 +25,17 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toolbar;
 
 import java.io.IOException;
 import java.net.URL;
@@ -56,6 +64,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mAdapter = new MusicAdapter(this, tracks);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//
+//        Typeface tf = Typeface.createFromAsset(getAssets(),
+//                "font/dismis.TTF");
+//
+//        int titleId = getResources().getIdentifier("action_bar_title", "id",
+//                "android");
+//        TextView yourTextView = (TextView) findViewById(titleId);
+//        yourTextView.setTypeface(tf);
 
         if(savedInstanceState != null && savedInstanceState.containsKey(SEARCH_QUERY_RESULTS)){
             tracks.clear();
@@ -75,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         String napsterQuery = mSearchBoxEditText.getText().toString();
         URL napsterSearchUrl = NetworkUtils.buildUrl(napsterQuery);
         return napsterSearchUrl;
+
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.kylo.musemusic;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
@@ -111,18 +112,24 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
                 }
             });
         }
-
+        //Transfers to MusicInformationActivity
         void triggerAddButton(final int listIndex){
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Just filler information
-                    Log.e("Information",mTrack.get(listIndex).getTrackArtist());
-                    Log.e("Information",mTrack.get(listIndex).getTrackName());
-                    Log.e("Information",mTrack.get(listIndex).getPreviewUrl());
-                    Log.e("Information",mTrack.get(listIndex).getAlbumUrl());
-                    Log.e("Information",mTrack.get(listIndex).getArtistId());
-                    Log.e("Information",mTrack.get(listIndex).getTrackArtist());
+                    Intent intent = new Intent(mContext, MusicInformationActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("trackArtist",mTrack.get(listIndex).getTrackArtist());
+                    intent.putExtra("trackName",mTrack.get(listIndex).getTrackName());
+                    intent.putExtra("albumUrl", mTrack.get(listIndex).getAlbumUrl());
+                    mContext.startActivity(intent);
+//                    //Just filler information
+//                    Log.e("Information",mTrack.get(listIndex).getTrackArtist());
+//                    Log.e("Information",mTrack.get(listIndex).getTrackName());
+//                    Log.e("Information",mTrack.get(listIndex).getPreviewUrl());
+//                    Log.e("Information",mTrack.get(listIndex).getAlbumUrl());
+//                    Log.e("Information",mTrack.get(listIndex).getArtistId());
+//                    Log.e("Information",mTrack.get(listIndex).getTrackArtist());
                 }
             });
         }

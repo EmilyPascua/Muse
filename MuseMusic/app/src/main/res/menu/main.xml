@@ -17,5 +17,6 @@
         android:id="@+id/action_search"
         android:orderInCategory="1"
         app:showAsAction="ifRoom"
-        android:title="search"/>
+        android:title="search"
+        />
 </menu>
