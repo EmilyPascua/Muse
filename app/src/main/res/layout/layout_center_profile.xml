@@ -8,13 +8,13 @@
         android:background="@color/white">
 
 
-    <RelativeLayout
-        android:id="@+id/relLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/relLayout1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp">-->
 
-        <include layout="@layout/snippet_top_profilebar"/>
-    </RelativeLayout>
+        <!--&lt;!&ndash;<include layout="@layout/snippet_top_profilebar"/>&ndash;&gt;-->
+    <!--</RelativeLayout>-->
         <!-- ********************Middle Section*************************** -->
 
         <RelativeLayout
@@ -35,7 +35,7 @@
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="25dp"
+                    android:layout_marginLeft="25dp"
                     android:layout_weight="25">
 
                     <de.hdodenhof.circleimageview.CircleImageView
@@ -111,6 +111,8 @@
                 android:layout_marginBottom="50dp"
                 >
 
+
+                <!--Replace this with a RecyclerView later-->
                 <GridView
                     android:id="@+id/gridView"
                     android:layout_width="match_parent"
@@ -123,6 +125,8 @@
 
 
                 </GridView>
+
+
 
 
             </RelativeLayout>

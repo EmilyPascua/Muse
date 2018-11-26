@@ -33,6 +33,7 @@ dependencies {
    // implementation 'com.github.ittianyu:BottomNavigationViewEx:1.1.9'
     implementation 'com.github.stanwood:BottomNavigationViewEx:41e335d'
 
+
     //circle imageview
     implementation 'de.hdodenhof:circleimageview:2.1.0'
 

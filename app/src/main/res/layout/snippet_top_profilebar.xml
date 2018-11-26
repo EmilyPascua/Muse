@@ -21,7 +21,7 @@
                 android:text="hello there"
                 android:textSize="20sp"
                 android:textColor="@color/black"
-                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
                 android:id="@+id/profileName"
                 />
 
@@ -29,7 +29,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_centerVertical="true"
                     android:id="@+id/profileMenu"
                     android:src="@drawable/ic_threedotph"

@@ -1,5 +1,17 @@
 <resources>
     <string name="app_name">MuseFoundation</string>
+
+    <!-- Activity Names -->
+    <string name="profile_activity">Profile Activity</string>
+
+    <!--Fragment Names-->
     <string name="edit_profile_fragment">Edit Profile</string>
+    <string name="profile_fragment">Profile</string>
     <string name="sign_out_fragment">Sign Out</string>
+
+
+    <!-- Intent Extras -->
+    <string name="calling_activity">calling_activity</string>
+    <string name="intent_user">intent_user</string>
+
 </resources>
