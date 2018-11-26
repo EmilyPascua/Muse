@@ -32,43 +32,43 @@ public class ProfileActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Log.d(TAG, "onCreate: started.");
-//        mProgressBar = (ProgressBar) findViewById(R.id.profileProgressBar);
-//        mProgressBar.setVisibility(View.GONE);
+
 
 
         init();
 
-        // Move these 2 calls along with their method definitions over to ProfileFragment
-//        setupBottomNavigationView();
-//        setupToolbar();
+//      Move these 2 calls along with their method definitions over to ProfileFragment
+
+//      setupBottomNavigationView();
+//      setupToolbar();
     }
 
-    private  void  setupToolbar(){
-        Toolbar toolbar = (Toolbar) findViewById(R.id.profileToolBar);
-        setSupportActionBar(toolbar);
-
-        ImageView profileMenu = (ImageView) findViewById(R.id.profileMenu);
-        profileMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "OnClick: Navigating to account settings.");
-                Intent intent = new Intent(mContext, AccountSettingsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-    }
-    //BottomNavigationView setup
-    private void setupBottomNavigationView(){
-
-        Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
-        BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottomNavViewBar);
-        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-        BottomNavigationViewHelper.enableNavigation(mContext, this, bottomNavigationViewEx);
-        Menu menu = bottomNavigationViewEx.getMenu();
-        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
-        menuItem.setChecked(true);
-    }
+//    private  void  setupToolbar(){
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.profileToolBar);
+//        setSupportActionBar(toolbar);
+//
+//        ImageView profileMenu = (ImageView) findViewById(R.id.profileMenu);
+//        profileMenu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d(TAG, "OnClick: Navigating to account settings.");
+//                Intent intent = new Intent(mContext, AccountSettingsActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//    }
+//    //BottomNavigationView setup
+//    private void setupBottomNavigationView(){
+//
+//        Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
+//        BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottomNavViewBar);
+//        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
+//        BottomNavigationViewHelper.enableNavigation(mContext, this, bottomNavigationViewEx);
+//        Menu menu = bottomNavigationViewEx.getMenu();
+//        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
+//        menuItem.setChecked(true);
+//    }
 
 
     private void init(){
