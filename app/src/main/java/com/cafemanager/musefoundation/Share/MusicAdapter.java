@@ -125,13 +125,12 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
                     intent.putExtra("trackName",mTrack.get(listIndex).getTrackName());
                     intent.putExtra("albumUrl", mTrack.get(listIndex).getAlbumUrl());
                     mContext.startActivity(intent);
-//                    //Just filler information
-//                    Log.e("Information",mTrack.get(listIndex).getTrackArtist());
-//                    Log.e("Information",mTrack.get(listIndex).getTrackName());
-//                    Log.e("Information",mTrack.get(listIndex).getPreviewUrl());
-//                    Log.e("Information",mTrack.get(listIndex).getAlbumUrl());
-//                    Log.e("Information",mTrack.get(listIndex).getArtistId());
-//                    Log.e("Information",mTrack.get(listIndex).getTrackArtist());
+                    //Just filler information
+                    Log.e("Information",mTrack.get(listIndex).getTrackName());
+                    Log.e("Information",mTrack.get(listIndex).getPreviewUrl());
+                    Log.e("Information",mTrack.get(listIndex).getAlbumUrl());
+                    Log.e("Information",mTrack.get(listIndex).getArtistId());
+                    Log.e("Information",mTrack.get(listIndex).getTrackArtist());
                 }
             });
         }

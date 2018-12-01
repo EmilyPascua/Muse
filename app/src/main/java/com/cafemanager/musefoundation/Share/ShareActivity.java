@@ -9,6 +9,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,9 +46,11 @@ public class ShareActivity extends AppCompatActivity implements LoaderManager.Lo
 
     @Override
     protected  void onCreate(@Nullable Bundle savedInstanceState){
+        Log.d(TAG, "onCreate: started.");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share);
-        Log.d(TAG, "onCreate: started.");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         mSearchBoxEditText = (EditText) findViewById(R.id.et_search_box);
         mProgressBar = (ProgressBar) findViewById(R.id.progress);
@@ -61,8 +64,6 @@ public class ShareActivity extends AppCompatActivity implements LoaderManager.Lo
             String searchResults = savedInstanceState.getString(SEARCH_QUERY_RESULTS);
             populateRecyclerView(searchResults);
         }
-
-        setupBottomNavigationView();
     }
 
     @Override
@@ -89,6 +90,7 @@ public class ShareActivity extends AppCompatActivity implements LoaderManager.Lo
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemThatWasClickedId = item.getItemId();
         if (itemThatWasClickedId == R.id.action_search) {
+            Log.e("TEST", "THIS WENT THROUGH");
             URL url = makeSearchUrl();
             Bundle bundle = new Bundle();
             bundle.putString(SEARCH_QUERY_URL_EXTRA, url.toString());
@@ -163,16 +165,4 @@ public class ShareActivity extends AppCompatActivity implements LoaderManager.Lo
 
     @Override
     public void onLoaderReset(android.support.v4.content.Loader<String> loader) {}
-
-    //BottomNavigationView setup
-    private void setupBottomNavigationView(){
-
-        Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
-        BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottomNavViewBar);
-        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-        BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
-        Menu menu = bottomNavigationViewEx.getMenu();
-        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
-        menuItem.setChecked(true);
-    }
 }

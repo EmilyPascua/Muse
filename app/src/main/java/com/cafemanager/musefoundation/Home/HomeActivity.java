@@ -31,9 +31,11 @@ public class HomeActivity extends AppCompatActivity {
     //adds the  3 tabs at the top: camera, home, and messages
     private void setupViewPager(){
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
         adapter.addFragment(new CameraFragment()); // index 0
         adapter.addFragment(new HomeFragment());  // index 1
         adapter.addFragment(new MessagesFragment());  // index 2
+
         ViewPager viewPager = (ViewPager) findViewById(R.id.container);
         viewPager.setAdapter(adapter);
 
