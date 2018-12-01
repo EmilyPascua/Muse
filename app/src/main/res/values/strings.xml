@@ -14,4 +14,20 @@
     <string name="calling_activity">calling_activity</string>
     <string name="intent_user">intent_user</string>
 
+    <!--Firebase Roots-->
+    <string name="firebase_user_posts">user_posts</string>
+    <string name="firebase_users">users</string>
+    <string name="firebase_followers">followers</string>
+    <string name="firebase_following">following</string>
+
+    <!--Firebase Fields-->
+    <string name="firebase_artist_name">artist_name</string>
+    <string name="firebase_song_name">song_name</string>
+    <string name="firebase_description">description</string>
+    <string name="firebase_song_preview">song_preview</string>
+    <string name="firebase_album_img_url">album_img_url</string>
+
+
+
+
 </resources>

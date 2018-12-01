@@ -30,6 +30,6 @@
         </RelativeLayout>
         <!-- bottom navigation-->
         <include layout="@layout/layout_bottom_navigation_view"/>
-    </RelativeLayout>
+        </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>
