@@ -19,10 +19,8 @@ import android.widget.ProgressBar;
 
 import com.cafemanager.musefoundation.Model.Track;
 import com.cafemanager.musefoundation.R;
-import com.cafemanager.musefoundation.Utils.BottomNavigationViewHelper;
 import com.cafemanager.musefoundation.Utils.NetworkUtils;
 import com.cafemanager.musefoundation.Utils.api.JsonUtils;
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import java.io.IOException;
 import java.net.URL;
@@ -90,7 +88,6 @@ public class ShareActivity extends AppCompatActivity implements LoaderManager.Lo
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemThatWasClickedId = item.getItemId();
         if (itemThatWasClickedId == R.id.action_search) {
-            Log.e("TEST", "THIS WENT THROUGH");
             URL url = makeSearchUrl();
             Bundle bundle = new Bundle();
             bundle.putString(SEARCH_QUERY_URL_EXTRA, url.toString());
