@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+// Part 12
 public class SectionsStatePagerAdapter extends FragmentStatePagerAdapter {
 
     private final List<Fragment> mFragmentList = new ArrayList<>();
@@ -22,13 +23,13 @@ public class SectionsStatePagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int i) {
-        return null;
+    public Fragment getItem(int position) {
+        return mFragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return mFragmentList.size();
     }
 
     public void addFragment(Fragment fragment, String fragmentName){

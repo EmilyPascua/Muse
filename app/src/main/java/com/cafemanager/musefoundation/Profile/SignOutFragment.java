@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.cafemanager.musefoundation.R;
 
+// Part 12
 public class SignOutFragment extends Fragment {
 
     private static final String TAG = "SignOutFragment";
