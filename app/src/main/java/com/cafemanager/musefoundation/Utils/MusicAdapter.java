@@ -77,7 +77,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
         public MusicHolder(View itemView) {
             super(itemView);
 
-            mAlbumImageView = (ImageView) itemView.findViewById(R.id.album_image);
+            mAlbumImageView = (ImageView) itemView.findViewById(R.id.album_url);
             mTrackNameTextView = (TextView) itemView.findViewById(R.id.track_name);
             mTrackArtistTextView = (TextView) itemView.findViewById(R.id.track_artist);
 

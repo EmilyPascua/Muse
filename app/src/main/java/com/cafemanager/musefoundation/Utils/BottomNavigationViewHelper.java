@@ -16,6 +16,21 @@ import com.cafemanager.musefoundation.Search.SearchActivity;
 import com.cafemanager.musefoundation.Share.ShareActivity;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
+/**
+ *  Added "callingActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);"
+ *  right before every break;   (+)
+ *
+ *  Added "final Activity callingActivity" to enableNavigation's parameters.  (+)
+ *
+ *  Activities that need to be modified because they call the old version of enableNavigation():
+ *      1) HomeActivity (under Home)
+ *      2) Likes Activity (under Likes)
+ *      3) Search Activity (under Search)
+ *
+ *
+ *  Note: Don't forget to copy/paste "anim" folder to Emily-MergedKevin's "res" folder
+ */
+
 public class BottomNavigationViewHelper {
 
     private static  final String TAG = "BottomNavigationViewHel";
@@ -29,6 +44,8 @@ public class BottomNavigationViewHelper {
 
 
     }
+
+
 
     public  static  void enableNavigation(final Context context, final Activity callingActivity, BottomNavigationViewEx view){
         view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

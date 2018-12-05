@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ *  Copy/Paste new versions of getItem() and getCount()
+ */
+
 // Part 12
 public class SectionsStatePagerAdapter extends FragmentStatePagerAdapter {
 
@@ -21,6 +25,8 @@ public class SectionsStatePagerAdapter extends FragmentStatePagerAdapter {
     public SectionsStatePagerAdapter(FragmentManager fm){
         super(fm);
     }
+
+
 
     @Override
     public Fragment getItem(int position) {

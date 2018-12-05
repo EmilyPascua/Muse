@@ -61,7 +61,6 @@ public class AccountSettingsActivity extends AppCompatActivity {
     private void setViewPager(int fragmentNumber){
         mRelativeLayout.setVisibility(View.GONE);
         Log.d(TAG, "setViewPager: navigating to fragment #: " + fragmentNumber);
-        // The Problem is here??
         mViewPager.setAdapter(pagerAdapter);
         mViewPager.setCurrentItem(fragmentNumber);
     }

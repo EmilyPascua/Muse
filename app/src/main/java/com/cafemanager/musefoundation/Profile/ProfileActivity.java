@@ -19,6 +19,15 @@ import com.cafemanager.musefoundation.R;
 import com.cafemanager.musefoundation.Utils.BottomNavigationViewHelper;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
+
+/**
+ *  Removed mProgressBar.  (-)
+ *  Removed setupToolbar() and setupBottomNavigationView() method definitions  (-)
+ *
+ *  Added init() method and called it in onCreate  (+)
+ *
+ */
+
 public class ProfileActivity extends AppCompatActivity{
 
     private  static  final String TAG = "ProfileActivity";
@@ -26,7 +35,6 @@ public class ProfileActivity extends AppCompatActivity{
 
     private static  final int ACTIVITY_NUM = 4;
 
-    private ProgressBar mProgressBar;
     @Override
     protected  void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -37,43 +45,15 @@ public class ProfileActivity extends AppCompatActivity{
 
         init();
 
-//      Move these 2 calls along with their method definitions over to ProfileFragment
-
-//      setupBottomNavigationView();
-//      setupToolbar();
     }
 
-//    private  void  setupToolbar(){
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.profileToolBar);
-//        setSupportActionBar(toolbar);
-//
-//        ImageView profileMenu = (ImageView) findViewById(R.id.profileMenu);
-//        profileMenu.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d(TAG, "OnClick: Navigating to account settings.");
-//                Intent intent = new Intent(mContext, AccountSettingsActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//    }
-//    //BottomNavigationView setup
-//    private void setupBottomNavigationView(){
-//
-//        Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
-//        BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottomNavViewBar);
-//        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-//        BottomNavigationViewHelper.enableNavigation(mContext, this, bottomNavigationViewEx);
-//        Menu menu = bottomNavigationViewEx.getMenu();
-//        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
-//        menuItem.setChecked(true);
-//    }
 
+    /**
+     *  Copy and Paste.
+     */
 
     private void init(){
         Log.d(TAG, "init: inflating " + getString(R.string.profile_fragment));
-
         Intent intent = getIntent();
 
         /**

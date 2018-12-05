@@ -36,6 +36,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *  Copy and Paste. Emily-MergedKevin doesn't have this file.
+ */
+
 public class ProfileFragment extends Fragment {
 
     private static final String TAG = "ProfileFragment";
@@ -93,14 +97,25 @@ public class ProfileFragment extends Fragment {
         // This should be moved to a separate method once we implement Firebase authentication
 
 
+        /**
+         *  Anyone trying to test out Profile page needs to comment out
+         *      1) setupRecyclerView();
+         *      2) getPostsCount();
+         *      3) getFollowersCount();
+         *      4) getFollowingCount();
+         *      5) Firebase references above
+         *
+         *  If you wanna test Profile page w/ Firebase, add Dependencies and
+         *  and google-services.json.
+         *
+         */
 
-
-        // Needs to be called after initializing Firebase database reference (Bc it'll need to use it)
         setupRecyclerView();
 
-
-
         getPostsCount();
+        getFollowersCount();
+        getFollowingCount();
+
 
         TextView editProfile = (TextView) view.findViewById(R.id.textEditProfile);
         editProfile.setOnClickListener(new View.OnClickListener() {
@@ -295,7 +310,7 @@ public class ProfileFragment extends Fragment {
     private void setupBottomNavigationView(){
         Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationView);
-        BottomNavigationViewHelper.enableNavigation(mContext,getActivity() ,bottomNavigationView);
+        BottomNavigationViewHelper.enableNavigation(mContext, getActivity(), bottomNavigationView);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);
