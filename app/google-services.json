@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "804315928832",
-    "firebase_url": "https://muse-2f4d7.firebaseio.com",
-    "project_id": "muse-2f4d7",
-    "storage_bucket": "muse-2f4d7.appspot.com"
+    "project_number": "572980581375",
+    "firebase_url": "https://muse2pointo.firebaseio.com",
+    "project_id": "muse2pointo",
+    "storage_bucket": "muse2pointo.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:804315928832:android:067d9e57cdf05d63",
+        "mobilesdk_app_id": "1:572980581375:android:067d9e57cdf05d63",
         "android_client_info": {
           "package_name": "com.cafemanager.muse"
         }
       },
       "oauth_client": [
         {
-          "client_id": "804315928832-cs66naklu2j7k4fo4vbisif5mt04sp65.apps.googleusercontent.com",
+          "client_id": "572980581375-jt0oqsbgrsktopasgtjr9jav6itfnoat.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.cafemanager.muse",
-            "certificate_hash": "7376f4bfd64ca1f8e6cbd5a42445ae0da1252bc0"
+            "certificate_hash": "f5bc16182ad5fddf245cc06a8987b67e618e9741"
           }
         },
         {
-          "client_id": "804315928832-jj6dvbq2fcn53osuut36fivt2q8bmk5v.apps.googleusercontent.com",
+          "client_id": "572980581375-ond72c44qj96l0tclr5cb33lcgl3cskn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAZkSYDgbuNyGf5IgpjA-qFdeme9_EQ3Rs"
+          "current_key": "AIzaSyD-NBfSg60GYd7joA3wdUhkwEGP29MOMWE"
         }
       ],
       "services": {
@@ -40,7 +40,51 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "804315928832-jj6dvbq2fcn53osuut36fivt2q8bmk5v.apps.googleusercontent.com",
+              "client_id": "572980581375-ond72c44qj96l0tclr5cb33lcgl3cskn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572980581375:android:d896bbb18ae567bd",
+        "android_client_info": {
+          "package_name": "com.cafemanager.musefoundation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "572980581375-23fnqg2dag5nhiprdi0h4a19j4lcurrc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cafemanager.musefoundation",
+            "certificate_hash": "f5bc16182ad5fddf245cc06a8987b67e618e9741"
+          }
+        },
+        {
+          "client_id": "572980581375-ond72c44qj96l0tclr5cb33lcgl3cskn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-NBfSg60GYd7joA3wdUhkwEGP29MOMWE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "572980581375-ond72c44qj96l0tclr5cb33lcgl3cskn.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
