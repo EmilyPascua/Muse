@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cafemanager.musefoundation">
+    package="com.cafemanager.muse">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -17,19 +17,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Home.HomeActivity">
+        <activity android:name="com.cafemanager.muse.Home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Likes.LikesActivity" />
-        <activity android:name=".Profile.ProfileActivity" />
-        <activity android:name=".Search.SearchActivity" />
-        <activity android:name=".Share.ShareActivity" />
-        <activity android:name=".Profile.AccountSettingsActivity" />
-        <activity android:name=".Share.MuseMusicDescription"></activity>
+        <activity android:name="com.cafemanager.muse.Likes.LikesActivity" />
+        <activity android:name="com.cafemanager.muse.Profile.ProfileActivity" />
+        <activity android:name="com.cafemanager.muse.Search.SearchActivity" />
+        <activity android:name="com.cafemanager.muse.Share.ShareActivity" />
+        <activity android:name="com.cafemanager.muse.Profile.AccountSettingsActivity" />
+        <activity android:name="com.cafemanager.muse.Share.MuseMusicDescription"></activity>
     </application>
 
 </manifest>

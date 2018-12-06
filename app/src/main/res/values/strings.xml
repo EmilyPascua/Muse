@@ -1,6 +1,33 @@
 <resources>
     <string name="app_name">MuseFoundation</string>
+
+    <!-- Activity Names -->
+    <string name="profile_activity">Profile Activity</string>
+
+    <!--Fragment Names-->
     <string name="edit_profile_fragment">Edit Profile</string>
+    <string name="profile_fragment">Profile</string>
     <string name="sign_out_fragment">Sign Out</string>
-    <string name="title_activity_test">Test</string>
+
+
+    <!-- Intent Extras -->
+    <string name="calling_activity">calling_activity</string>
+    <string name="intent_user">intent_user</string>
+
+    <!--Firebase Roots-->
+    <string name="firebase_user_posts">user_posts</string>
+    <string name="firebase_users">users</string>
+    <string name="firebase_followers">followers</string>
+    <string name="firebase_following">following</string>
+
+    <!--Firebase Fields-->
+    <string name="firebase_artist_name">artist_name</string>
+    <string name="firebase_song_name">song_name</string>
+    <string name="firebase_description">description</string>
+    <string name="firebase_song_preview">song_preview</string>
+    <string name="firebase_album_img_url">album_img_url</string>
+
+
+
+
 </resources>
