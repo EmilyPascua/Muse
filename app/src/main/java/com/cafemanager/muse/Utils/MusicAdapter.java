@@ -27,11 +27,6 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
 
         mPosts = posts;
 
-//        for(int i = 0; i < 10; i++) {
-//            String tempString = "Temp string just to populate RecyclerView";
-//
-//            tempList.add(tempString);
-//        }
     }
 
     @Override

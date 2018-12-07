@@ -19,6 +19,7 @@
     <string name="firebase_users">users</string>
     <string name="firebase_followers">followers</string>
     <string name="firebase_following">following</string>
+    <string name="firebase_user_account_settings">user_account_settings</string>
 
     <!--Firebase Fields-->
     <string name="firebase_artist_name">artist_name</string>
@@ -26,6 +27,12 @@
     <string name="firebase_description">description</string>
     <string name="firebase_song_preview">song_preview</string>
     <string name="firebase_album_img_url">album_img_url</string>
+
+    <string name="firebase_username">username</string>
+    <string name="firebase_user_id">user_id</string>
+
+    <!--Hints-->
+    <string name="hint_search">Search...</string>
 
 
 
