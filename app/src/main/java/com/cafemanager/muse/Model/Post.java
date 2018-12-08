@@ -1,4 +1,4 @@
-package com.cafemanager.muse.Models;
+package com.cafemanager.muse.Model;
 
 public class Post {
 
@@ -6,59 +6,59 @@ public class Post {
      Not sure if all instance variables should hold Strings.
      This is temporary.
      */
-    private String mArtistName;
-    private String mSongName;
-    private String mAlbumImgUrl;
-    private String mSongPreview;
-    private String mDescription;
+    private String artist_name;
+    private String song_name;
+    private String album_image;
+    private String song_preview;
+    private String post_description;
 
     public Post(){}
 
     public Post(String artistName, String songName, String albumImgUrl, String songPreview, String description) {
-        mArtistName = artistName;
-        mSongName = songName;
-        mAlbumImgUrl = albumImgUrl;
-        mSongPreview = songPreview;
-        mDescription = description;
+        artist_name = artistName;
+        song_name = songName;
+        album_image = albumImgUrl;
+        song_preview = songPreview;
+        post_description = description;
     }
 
-    public String getArtistName() {
-        return mArtistName;
+    public String getArtist_name() {
+        return artist_name;
     }
 
-    public void setArtistName(String artistName) {
-        mArtistName = artistName;
+    public void setArtist_name(String artist_name) {
+        this.artist_name = artist_name;
     }
 
-    public String getSongName() {
-        return mSongName;
+    public String getSong_name() {
+        return song_name;
     }
 
-    public void setSongName(String songName) {
-        mSongName = songName;
+    public void setSong_name(String song_name) {
+        this.song_name = song_name;
     }
 
-    public String getAlbumImgUrl() {
-        return mAlbumImgUrl;
+    public String getAlbum_image() {
+        return album_image;
     }
 
-    public void setAlbumImgUrl(String albumImgUrl) {
-        mAlbumImgUrl = albumImgUrl;
+    public void setAlbum_image(String album_image) {
+        this.album_image = album_image;
     }
 
-    public String getSongPreview() {
-        return mSongPreview;
+    public String getSong_preview() {
+        return song_preview;
     }
 
-    public void setSongPreview(String songPreview) {
-        mSongPreview = songPreview;
+    public void setSong_preview(String song_preview) {
+        this.song_preview = song_preview;
     }
 
-    public String getDescription() {
-        return mDescription;
+    public String getPost_description() {
+        return post_description;
     }
 
-    public void setDescription(String description) {
-        mDescription = description;
+    public void setPost_description(String post_description) {
+        this.post_description = post_description;
     }
 }
