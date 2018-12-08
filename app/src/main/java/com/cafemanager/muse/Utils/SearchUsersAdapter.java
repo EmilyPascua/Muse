@@ -2,16 +2,20 @@ package com.cafemanager.muse.Utils;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cafemanager.muse.Model.User;
 import com.cafemanager.muse.Model.UserAccountSettings;
+import com.cafemanager.muse.Profile.ProfileActivity;
 import com.cafemanager.muse.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,6 +42,8 @@ public class SearchUsersAdapter extends RecyclerView.Adapter<SearchUsersAdapter.
     private Context mContext;
     public ArrayList<User> mSearchUsers;
 
+
+
     public SearchUsersAdapter(Context context, ArrayList<User> listUsers) {
         this.mContext = context;
         this.mSearchUsers = listUsers;
@@ -60,6 +66,7 @@ public class SearchUsersAdapter extends RecyclerView.Adapter<SearchUsersAdapter.
     public void onBindViewHolder(@NonNull final SearchUsersHolder searchUsersHolder, int position) {
         searchUsersHolder.bind(position);
 
+
     }
 
     @Override
@@ -68,9 +75,12 @@ public class SearchUsersAdapter extends RecyclerView.Adapter<SearchUsersAdapter.
     }
 
 
+    /**
+     *  Set an onClickListener to your viewHolder so that we can navigate to
+     *  ProfileActivity --> ViewProfileFragment
+     */
 
-
-    public class SearchUsersHolder extends RecyclerView.ViewHolder {
+    public class SearchUsersHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         // Widgets in layout_search_user_item.xml
         public CircleImageView profileImage;
@@ -84,7 +94,30 @@ public class SearchUsersAdapter extends RecyclerView.Adapter<SearchUsersAdapter.
             username = (TextView) view.findViewById(R.id.username);
             email = (TextView) view.findViewById(R.id.email);
 
+            view.setOnClickListener(this);
+
         }
+
+
+        /**
+         *
+         * @param view
+         * Will navigate to UserProfile depending on which item was clicked
+         */
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+
+
+            Intent intent = new Intent(mContext, ProfileActivity.class);
+            intent.putExtra(mContext.getString(R.string.calling_activity), mContext.getString(R.string.search_activity));
+            intent.putExtra(mContext.getString(R.string.intent_user), mSearchUsers.get(position));
+            mContext.startActivity(intent);
+
+//            Toast.makeText(mContext, "Position clicked: " + position,
+//                    Toast.LENGTH_LONG).show();
+        }
+
 
         void bind(int position) {
             /**
