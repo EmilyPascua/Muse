@@ -1,28 +1,38 @@
 package com.cafemanager.muse.Utils;
 
 import android.content.Context;
+import android.media.AudioManager;
+import android.media.Image;
+import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cafemanager.muse.Model.Post;
 import com.cafemanager.muse.Model.Track;
 import com.cafemanager.muse.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 
 public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>{
 
+
+    private static final String TAG = "MusicAdapter";
     Context mContext;
-    //    private ArrayList<String> tempList = new ArrayList<>();
-    private List<Track> mPosts;
+    private List<Post> mPosts;
+    
 
     // Pass in any necessary data to constructor so Adapter can attach the data to Music Player widget
     // mContext is used so that we can access LayoutInflater in onCreateViewHolder()
-    public MusicAdapter(Context context, List<Track> posts) {
+    public MusicAdapter(Context context, List<Post> posts) {
         mContext = context;
 
         mPosts = posts;
@@ -35,7 +45,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
         LayoutInflater inflater = LayoutInflater.from(context);
         boolean shouldAttachToParentImmediately = false;
 
-        View view = inflater.inflate(R.layout.music_item, parent, shouldAttachToParentImmediately);
+        View view = inflater.inflate(R.layout.post_item, parent, shouldAttachToParentImmediately);
         MusicHolder viewHolder = new MusicHolder(view);
         return viewHolder;
     }
@@ -48,10 +58,18 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
         // To make something apppear on the Album ImageView, you're gonna need to do
         // a bit more work.
 
-        holder.mTrackNameTextView.setText(mPosts.get(position).getTrackName());
-        holder.mTrackArtistTextView.setText(mPosts.get(position).getTrackArtist());
+        Log.d(TAG, "position: " + position);
+
+        holder.bind(position);
+
+
+
+
 
     }
+
+
+
 
 
 
@@ -67,6 +85,9 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
         private ImageView mAlbumImageView;
         private TextView mTrackNameTextView;
         private TextView mTrackArtistTextView;
+        private TextView mDescription;
+        private Button playButton;
+        MediaPlayer mediaPlayer = new MediaPlayer();
 
         public MusicHolder(View itemView) {
             super(itemView);
@@ -74,8 +95,61 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
             mAlbumImageView = (ImageView) itemView.findViewById(R.id.album_url);
             mTrackNameTextView = (TextView) itemView.findViewById(R.id.track_name);
             mTrackArtistTextView = (TextView) itemView.findViewById(R.id.track_artist);
+            mDescription = (TextView) itemView.findViewById(R.id.description);
+            playButton = (Button) itemView.findViewById(R.id.post_play_button);
 
 
+        }
+
+        void bind(final int position) {
+//            Picasso.with(mContext).load(mTrack.get(listIndex).getAlbumUrl()).into(albumUrl);
+            Picasso.get().load(mPosts.get(position).getAlbum_image()).into(mAlbumImageView);
+
+            createMediaPlayer(mPosts.get(position).getSong_preview());
+            triggerPlayButton();
+
+            mTrackNameTextView.setText(mPosts.get(position).getSong_name());
+            mTrackArtistTextView.setText(mPosts.get(position).getArtist_name());
+            mDescription.append(mPosts.get(position).getPost_description());
+
+        }
+
+        void createMediaPlayer(String track){
+            Toast.makeText(mContext,"Play Song", Toast.LENGTH_LONG);
+            try {
+                mediaPlayer.reset();
+                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mediaPlayer.setDataSource(track);
+                mediaPlayer.prepareAsync();
+                mediaPlayer.start();
+
+                // Changing Button Image to pause image
+                playButton.setBackgroundResource(R.drawable.ic_play_circle_outline_black_24dp);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        void triggerPlayButton(){
+            playButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mediaPlayer.isPlaying()){
+                        if(mediaPlayer!=null){
+                            mediaPlayer.pause();
+                            // Changing button image to play button
+                            playButton.setBackgroundResource(R.drawable.ic_play_circle_outline_black_24dp);
+                        }
+                    }else{
+                        // Resume song
+                        if(mediaPlayer!=null){
+                            mediaPlayer.start();
+                            // Changing button image to pause button
+                            playButton.setBackgroundResource(R.drawable.ic_pause_circle_outline_black_24dp);
+                        }
+                    }
+                }
+            });
         }
     }
 }
