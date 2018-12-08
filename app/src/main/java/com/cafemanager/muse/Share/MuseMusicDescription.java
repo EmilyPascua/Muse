@@ -38,7 +38,8 @@ public class MuseMusicDescription extends AppCompatActivity {
 
         final ImageView albumPicture = (ImageView) findViewById(R.id.track_album_artist_description);
 
-        Picasso.with(getApplicationContext()).load(sAlbumUrl).into(albumPicture);
+//        Picasso.with(getApplicationContext()).load(sAlbumUrl).into(albumPicture);
+        Picasso.get().load(sAlbumUrl).into(albumPicture);
 
     }
 

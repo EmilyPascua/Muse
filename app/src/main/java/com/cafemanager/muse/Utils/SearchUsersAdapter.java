@@ -4,13 +4,22 @@ package com.cafemanager.muse.Utils;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cafemanager.muse.Model.User;
+import com.cafemanager.muse.Model.UserAccountSettings;
 import com.cafemanager.muse.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,18 +34,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SearchUsersAdapter extends RecyclerView.Adapter<SearchUsersAdapter.SearchUsersHolder>{
 
+    private static final String TAG = "SearchUserAdapter";
     private Context mContext;
-    private ArrayList<User> mSearchUsers;
+    public ArrayList<User> mSearchUsers;
 
     public SearchUsersAdapter(Context context, ArrayList<User> listUsers) {
-
-        mContext = context;
-        mSearchUsers = listUsers;
+        this.mContext = context;
+        this.mSearchUsers = listUsers;
     }
 
     @NonNull
     @Override
-    public SearchUsersHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SearchUsersAdapter.SearchUsersHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         boolean shouldAttachToParentImmediately = false;
@@ -48,14 +57,8 @@ public class SearchUsersAdapter extends RecyclerView.Adapter<SearchUsersAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchUsersHolder searchUsersHolder, int position) {
-        /**
-         *  Picasso:
-         *      Going to use Emily's approach (in Share/MusicAdapter) to load
-         *      our profileImages.
-         */
-
-
+    public void onBindViewHolder(@NonNull final SearchUsersHolder searchUsersHolder, int position) {
+        searchUsersHolder.bind(position);
 
     }
 
@@ -65,10 +68,12 @@ public class SearchUsersAdapter extends RecyclerView.Adapter<SearchUsersAdapter.
     }
 
 
-    public static class SearchUsersHolder extends RecyclerView.ViewHolder {
+
+
+    public class SearchUsersHolder extends RecyclerView.ViewHolder {
 
         // Widgets in layout_search_user_item.xml
-        private CircleImageView profileImage;
+        public CircleImageView profileImage;
         private TextView username;
         private TextView email;
 
@@ -79,6 +84,55 @@ public class SearchUsersAdapter extends RecyclerView.Adapter<SearchUsersAdapter.
             username = (TextView) view.findViewById(R.id.username);
             email = (TextView) view.findViewById(R.id.email);
 
+        }
+
+        void bind(int position) {
+            /**
+             *  Picasso:
+             *      Going to use Emily's approach (in Share/MusicAdapter) to load
+             *      our profileImages.
+             */
+
+//            searchUsersHolder.username.setText(mSearchUsers.get(position).getUsername());
+//            searchUsersHolder.email.setText(mSearchUsers.get(position).getEmail());
+
+            username.setText(mSearchUsers.get(position).getUsername());
+            email.setText(mSearchUsers.get(position).getEmail());
+
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+            Query query = databaseReference.child(mContext.getString(R.string.firebase_user_account_settings))
+                    .orderByChild(mContext.getString(R.string.firebase_user_id))
+                    .equalTo(mSearchUsers.get(position).getUser_id());
+
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                        Log.d(TAG, "onDataChange found user_id: " +
+                                singleSnapshot.getValue(UserAccountSettings.class).toString());
+
+                        /**
+                         *  Now we'll use Picasso to set image for our CircleImageView.
+                         */
+
+                        String profileImageUrl = singleSnapshot.getValue(UserAccountSettings.class).getProfile_photo();
+
+
+
+//                        Picasso.with(mContext).load(profileImageUrl).into(searchUsersHolder.profileImage);
+
+                        Picasso.get().load(profileImageUrl).into(profileImage);
+
+
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
     }
 

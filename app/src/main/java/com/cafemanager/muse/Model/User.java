@@ -5,6 +5,15 @@ import android.os.Parcelable;
 
 public class User implements Parcelable{
 
+    /**
+     *  All these fields must match the ones you have on Firebase.
+     *  If you add more fields, add them on Firebase.
+     *  If you add more fields on Firebase, add them here too.
+     *
+     *  Also, types must match. Ex: user_id is String, so on Firebase
+     *  you must enter it as a String as well
+     */
+
     private String user_id;
     private long phone_number;
     private String email;

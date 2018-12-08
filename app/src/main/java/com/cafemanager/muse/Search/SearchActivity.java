@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import com.cafemanager.muse.Model.User;
 import com.cafemanager.muse.R;
 import com.cafemanager.muse.Utils.BottomNavigationViewHelper;
+import com.cafemanager.muse.Utils.SearchUsersAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,10 +41,11 @@ public class SearchActivity extends AppCompatActivity{
     private RecyclerView mRecyclerView;
 
     // Variables
-    private List<User> mUserList;
+    private ArrayList<User> mUserList;
+    private SearchUsersAdapter mSearchUsersAdapter;
 
     @Override
-    protected  void onCreate(@Nullable Bundle savedInstanceState){
+    protected void onCreate(@Nullable Bundle savedInstanceState){
         Log.d(TAG, "onCreate: started.");
 
         super.onCreate(savedInstanceState);
@@ -50,6 +53,13 @@ public class SearchActivity extends AppCompatActivity{
 
         mRecyclerView = (RecyclerView) findViewById(R.id.view_profile_recycler_view);
         mSearchParam = (EditText) findViewById(R.id.search_user);
+
+        mUserList = new ArrayList<>();
+        mSearchUsersAdapter = new SearchUsersAdapter(SearchActivity.this, mUserList);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mSearchUsersAdapter);
+
+
 
 
 
@@ -81,6 +91,14 @@ public class SearchActivity extends AppCompatActivity{
     }
 
     private void updateUsersList() {
+        // mUserList is ArrayList
+//        mSearchUsersAdapter = new SearchUsersAdapter(SearchActivity.this, mUserList);
+//        mRecyclerView.setAdapter(mSearchUsersAdapter);
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mSearchUsersAdapter.mSearchUsers.clear();
+        mSearchUsersAdapter.mSearchUsers.addAll(mUserList);
+        mSearchUsersAdapter.notifyDataSetChanged();
 
     }
 
@@ -90,7 +108,10 @@ public class SearchActivity extends AppCompatActivity{
         // Clear list before creating new search results
         mUserList.clear();
 
+
+
         if(keyword.length() > 0) {
+            Log.d(TAG, "Keyword length greater than 0, searching...");
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
             Query query = databaseReference.child(getString(R.string.firebase_users))
                     .orderByChild(getString(R.string.firebase_username)).equalTo(keyword);
@@ -100,6 +121,7 @@ public class SearchActivity extends AppCompatActivity{
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                         Log.d(TAG, "onDataChange: Found user: " + singleSnapshot.getValue(User.class).toString());
+
 
                         // Getting User object from snapshot via "User.class" (fields must match)
                         mUserList.add(singleSnapshot.getValue(User.class));

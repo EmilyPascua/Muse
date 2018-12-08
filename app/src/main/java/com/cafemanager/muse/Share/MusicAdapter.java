@@ -68,7 +68,8 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
         }
 
         void bind(final int listIndex) {
-            Picasso.with(mContext).load(mTrack.get(listIndex).getAlbumUrl()).into(albumUrl);
+//            Picasso.with(mContext).load(mTrack.get(listIndex).getAlbumUrl()).into(albumUrl);
+            Picasso.get().load(mTrack.get(listIndex).getAlbumUrl()).into(albumUrl);
             createMediaPlayer(mTrack.get(listIndex).getPreviewUrl());
             triggerPlayButton();
             triggerAddButton(listIndex);
