@@ -15,12 +15,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cafemanager.muse.Home.HomeActivity;
 import com.cafemanager.muse.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+//firebase
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import org.w3c.dom.Text;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -69,6 +74,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void init(){
+
+        //init button for logging in
         Button btnLogin = (Button) findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,12 +115,33 @@ public class LoginActivity extends AppCompatActivity {
                                     mProgessBar.setVisibility(View.GONE);
                                     mPleaseWait.setVisibility(View.GONE);
                                 }
+                                
 
-                                // ...
+                                /*
+                                If the User is logged in then navigate to home activity
+                                */
+                                if(mAuth.getCurrentUser() != null){
+                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                    Log.d(TAG,"signInWithEmail: redirecting to HomeActivity");
+                                    startActivity(intent);
+                                    finish();
+                                }
                             }
                         });
             }
         });
+        TextView linkSignUp = (TextView) findViewById(R.id.link_signup);
+        linkSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(intent);
+
+            }
+        });
+        /*
+        If the User is logged in then navigate to home activity
+        */
     }
 
 
