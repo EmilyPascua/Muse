@@ -95,8 +95,8 @@ public class LoginActivity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
                                     FirebaseUser user = mAuth.getCurrentUser();
 
-                                    mProgessBar.setVisibility(View.VISIBLE);
-                                    mPleaseWait.setVisibility(View.VISIBLE);
+                                    mProgessBar.setVisibility(View.GONE);
+                                    mPleaseWait.setVisibility(View.GONE);
                                     Toast.makeText(mContext, R.string.auth_success,
                                             Toast.LENGTH_SHORT).show();
                                     Log.d(TAG, "signInWithEmail: successful login ");
