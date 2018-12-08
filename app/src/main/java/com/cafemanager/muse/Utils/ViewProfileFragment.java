@@ -58,6 +58,8 @@ public class ViewProfileFragment extends Fragment {
     private ImageView profileMenu;
     private BottomNavigationViewEx bottomNavigationView;
 
+    private TextView mProfileName;
+
 
     // Member Variables
     private int mFollowersCount = 0;
@@ -73,21 +75,25 @@ public class ViewProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_profile, container, false);
+        mContext = getActivity();
+
+        // Gonna use this member variable's user_id attribute to populate ViewProfileFragment
+        mUser = getUserFromBundle();
 
         // Widgets
         mPosts = (TextView) view.findViewById(R.id.tvPosts);
         mFollowers = (TextView) view.findViewById(R.id.tvFollowers);
         mFollowing = (TextView) view.findViewById(R.id.tvFollowing);
 
+        mProfileName = (TextView) view.findViewById(R.id.profileName);
+        mProfileName.setText(mUser.getUsername());
+
         toolbar = (Toolbar) view.findViewById(R.id.profileToolBar);
         profileMenu = (ImageView) view.findViewById(R.id.profileMenu);
         bottomNavigationView = (BottomNavigationViewEx) view.findViewById(R.id.bottomNavViewBar);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.music_recycler_view);
-        mContext = getActivity();
 
-        // Gonna use this member variable's user_id attribute to populate ViewProfileFragment
-        mUser = getUserFromBundle();
 
 
         setupToolbar();
@@ -137,31 +143,7 @@ public class ViewProfileFragment extends Fragment {
 
 
 
-//    private void init() {
-//        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-//        Query query = databaseReference.child(getString(R.string.firebase_user_account_settings))
-//                .orderByChild(getString(R.string.firebase_username)).equalTo(keyword);
-//
-//        query.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
-//                    Log.d(TAG, "onDataChange: Found user: " + singleSnapshot.getValue(User.class).toString());
-//
-//
-//                    // Getting User object from snapshot via "User.class" (fields must match)
-//                    mUserList.add(singleSnapshot.getValue(User.class));
-//
-//                    updateUsersList();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
+
 
 
     /**
