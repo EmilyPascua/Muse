@@ -29,7 +29,10 @@
         <activity android:name="com.cafemanager.muse.Search.SearchActivity" />
         <activity android:name="com.cafemanager.muse.Share.ShareActivity" />
         <activity android:name="com.cafemanager.muse.Profile.AccountSettingsActivity" />
-        <activity android:name="com.cafemanager.muse.Share.MuseMusicDescription"></activity>
+        <activity android:name="com.cafemanager.muse.Share.MuseMusicDescription"/>
+        <activity android:name="com.cafemanager.muse.Login.LoginActivity"/>
+        <activity android:name="com.cafemanager.muse.Login.RegisterActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MuseFoundation</string>
+    <string name="app_name">Muse</string>
 
     <!-- Activity Names -->
     <string name="profile_activity">Profile Activity</string>
@@ -26,6 +26,10 @@
     <string name="firebase_description">description</string>
     <string name="firebase_song_preview">song_preview</string>
     <string name="firebase_album_img_url">album_img_url</string>
+
+    <!--Firebase Auth-->
+    <string name="auth_failed">Failed to Authenticate</string>
+    <string name="auth_success">Authentication Success</string>
 
 
 
