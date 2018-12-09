@@ -87,54 +87,61 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(isStringNull(email) && isStringNull(password)){
                     Toast.makeText(mContext, "You must fill out all the fields", Toast.LENGTH_SHORT).show();
-                } else
+                } else {
+
                     mProgessBar.setVisibility(View.VISIBLE);
+
+
                     mPleaseWait.setVisibility(View.VISIBLE);
 
-                Task<AuthResult> authResultTask = mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Log.d(TAG, "signInWithEmail: success");
+                    Task<AuthResult> authResultTask = mAuth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    Log.d(TAG, "signInWithEmail: success");
 
 
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    if (task.isSuccessful()) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        FirebaseUser user = mAuth.getCurrentUser();
 
-                                    mProgessBar.setVisibility(View.GONE);
-                                    mPleaseWait.setVisibility(View.GONE);
-                                    Toast.makeText(mContext, R.string.auth_success,
-                                            Toast.LENGTH_SHORT).show();
-                                    Log.d(TAG, "signInWithEmail: successful login ");
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w(TAG, "signInWithEmail: login failed", task.getException());
-                                    Toast.makeText(mContext, R.string.auth_failed,
-                                            Toast.LENGTH_SHORT).show();
-                                    mProgessBar.setVisibility(View.GONE);
-                                    mPleaseWait.setVisibility(View.GONE);
-                                }
-                                
+                                        mProgessBar.setVisibility(View.GONE);
+                                        mPleaseWait.setVisibility(View.GONE);
+                                        Toast.makeText(mContext, R.string.auth_success,
+                                                Toast.LENGTH_SHORT).show();
+                                        Log.d(TAG, "signInWithEmail: successful login ");
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Log.w(TAG, "signInWithEmail: login failed", task.getException());
+                                        Toast.makeText(mContext, R.string.auth_failed,
+                                                Toast.LENGTH_SHORT).show();
+                                        mProgessBar.setVisibility(View.GONE);
+                                        mPleaseWait.setVisibility(View.GONE);
+                                    }
+
 
                                 /*
                                 If the User is logged in then navigate to home activity
                                 */
-                                if(mAuth.getCurrentUser() != null){
-                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                    Log.d(TAG,"signInWithEmail: redirecting to HomeActivity");
-                                    startActivity(intent);
-                                    finish();
+                                    if (mAuth.getCurrentUser() != null) {
+                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                        Log.d(TAG, "signInWithEmail: redirecting to HomeActivity");
+                                        startActivity(intent);
+                                        finish();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
             }
         });
+
+
+
         TextView linkSignUp = (TextView) findViewById(R.id.link_signup);
         linkSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
 
             }
@@ -147,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void setupFirebaseAuth(){
-        Log.d(TAG, "setuupFirebaseAuth: setting up firebase auth");
+        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth");
 
         mAuth = FirebaseAuth.getInstance();
 
