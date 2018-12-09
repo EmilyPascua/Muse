@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cafemanager.muse.Model.Post;
 import com.cafemanager.muse.Model.Track;
 import com.cafemanager.muse.Model.User;
 import com.cafemanager.muse.Profile.AccountSettingsActivity;
@@ -163,7 +164,7 @@ public class ViewProfileFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         // Get reference to database and populate a list of Posts
-        final ArrayList<Track> userPosts = new ArrayList<>();
+        final ArrayList<Post> userPosts = new ArrayList<>();
 
         /**
          *  Attempting to user mUser's user_id attribute to get all the Posts
@@ -179,18 +180,18 @@ public class ViewProfileFragment extends Fragment {
                     Log.d(TAG, "onDataChange: Found post:" + singleSnapshot.getValue());
 
                     // Use singleSnapshot to get all the values you need for a single Post object
-                    Track post = new Track();
+                    Post post = new Post();
 
                     // Create Map (from your DataSnapshot) to get values you need easily
                     Map<String, Object> firebasePostMap = (HashMap<String, Object>) singleSnapshot.getValue();
 
 
                     // Configure Post object
-                    post.setTrackArtist(firebasePostMap.get(getString(R.string.firebase_artist_name)).toString());
-                    post.setTrackName(firebasePostMap.get(getString(R.string.firebase_song_name)).toString());
-                    post.setAlbumUrl(firebasePostMap.get(getString(R.string.firebase_album_img_url)).toString());
-                    post.setTrackId(firebasePostMap.get(getString(R.string.firebase_description)).toString());
-                    post.setPreviewUrl(firebasePostMap.get(getString(R.string.firebase_song_preview)).toString());
+                    post.setArtist_name(firebasePostMap.get(getString(R.string.firebase_artist_name)).toString());
+                    post.setSong_name(firebasePostMap.get(getString(R.string.firebase_song_name)).toString());
+                    post.setAlbum_image(firebasePostMap.get(getString(R.string.firebase_album_image)).toString());
+                    post.setPost_description(firebasePostMap.get(getString(R.string.firebase_post_description)).toString());
+                    post.setSong_preview(firebasePostMap.get(getString(R.string.firebase_song_preview)).toString());
 
                     userPosts.add(post);
 
