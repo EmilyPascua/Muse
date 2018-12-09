@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cafemanager.muse.Model.Post;
 import com.cafemanager.muse.Model.Track;
 import com.cafemanager.muse.R;
 import com.cafemanager.muse.Utils.BottomNavigationViewHelper;
@@ -135,36 +136,36 @@ public class ProfileFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         // Get reference to database and populate a list of Posts
-        final ArrayList<Track> userPosts = new ArrayList<>();
+        final ArrayList<Post> userPosts = new ArrayList<>();
 
 
-        // Query is same as the one in getPostsCount()
-        // For testing purposes, I'm going to use Database Reference member variable "mRef"
-        // instead of doing this:
-        //        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        //        Query query = reference.child(getString(R.string.firebase_user_posts)).child("1111");
-
+        /**
+         *  Get all posts for a specific user. Rn we are hardcoding "1111" until
+         *  we can get the Auth state of the current user.
+         */
         Query query = myRef.child(getString(R.string.firebase_user_posts)).child("1111");
+
+
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
-                    Log.d(TAG, "onDataChange: Found post:" + singleSnapshot.getValue());
+                    Log.d(TAG, "onDataChange: Found user_post:" + singleSnapshot.getValue());
 
                     // Use singleSnapshot to get all the values you need for a single Post object
-                    Track post = new Track();
+                    Post post = new Post();
 
                     // Create Map (from your DataSnapshot) to get values you need easily
                     Map<String, Object> firebasePostMap = (HashMap<String, Object>) singleSnapshot.getValue();
 
 
                     // Configure Post object
-                    post.setTrackArtist(firebasePostMap.get(getString(R.string.firebase_artist_name)).toString());
-                    post.setTrackName(firebasePostMap.get(getString(R.string.firebase_song_name)).toString());
-                    post.setAlbumUrl(firebasePostMap.get(getString(R.string.firebase_album_img_url)).toString());
-                    post.setTrackId(firebasePostMap.get(getString(R.string.firebase_description)).toString());
-                    post.setPreviewUrl(firebasePostMap.get(getString(R.string.firebase_song_preview)).toString());
+                    post.setArtist_name(firebasePostMap.get(getString(R.string.firebase_artist_name)).toString());
+                    post.setSong_name(firebasePostMap.get(getString(R.string.firebase_song_name)).toString());
+                    post.setAlbum_image(firebasePostMap.get(getString(R.string.firebase_album_image)).toString());
+                    post.setPost_description(firebasePostMap.get(getString(R.string.firebase_post_description)).toString());
+                    post.setSong_preview(firebasePostMap.get(getString(R.string.firebase_song_preview)).toString());
 
                     userPosts.add(post);
 

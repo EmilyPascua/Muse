@@ -68,7 +68,8 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
         }
 
         void bind(final int listIndex) {
-            Picasso.with(mContext).load(mTrack.get(listIndex).getAlbumUrl()).into(albumUrl);
+//            Picasso.with(mContext).load(mTrack.get(listIndex).getAlbumUrl()).into(albumUrl);
+            Picasso.get().load(mTrack.get(listIndex).getAlbumUrl()).into(albumUrl);
             createMediaPlayer(mTrack.get(listIndex).getPreviewUrl());
             triggerPlayButton();
             triggerAddButton(listIndex);
@@ -124,6 +125,13 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
                     intent.putExtra("trackArtist",mTrack.get(listIndex).getTrackArtist());
                     intent.putExtra("trackName",mTrack.get(listIndex).getTrackName());
                     intent.putExtra("albumUrl", mTrack.get(listIndex).getAlbumUrl());
+
+                    /**
+                     *  Adding preview as intentExtra as well, since we'll need to use this to play tracks
+                     *  on user's profile
+                     */
+                    intent.putExtra("previewUrl",mTrack.get(listIndex).getPreviewUrl());
+
                     mContext.startActivity(intent);
                     //Just filler information
                     Log.e("Information",mTrack.get(listIndex).getTrackName());
@@ -131,6 +139,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
                     Log.e("Information",mTrack.get(listIndex).getAlbumUrl());
                     Log.e("Information",mTrack.get(listIndex).getArtistId());
                     Log.e("Information",mTrack.get(listIndex).getTrackArtist());
+
                 }
             });
         }

@@ -27,7 +27,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     //Picasso
-    implementation 'com.squareup.picasso:picasso:2.5.1'
+//    implementation 'com.squareup.picasso:picasso:2.5.1'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     //Design Library for coordinator layout and toolbars
     implementation 'com.android.support:design:28.0.0'
