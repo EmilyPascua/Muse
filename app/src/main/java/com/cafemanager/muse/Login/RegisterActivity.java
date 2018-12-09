@@ -153,6 +153,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                             //add new user account_settings to database
                             Toast.makeText(mContext, "Registration successful", Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent(mContext, LoginActivity.class);
+                            startActivity(intent);
                         }
 
                         @Override
