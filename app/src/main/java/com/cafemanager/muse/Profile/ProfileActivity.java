@@ -13,9 +13,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.cafemanager.muse.Model.User;
 import com.cafemanager.muse.R;
 import com.cafemanager.muse.Utils.BottomNavigationViewHelper;
+import com.cafemanager.muse.Utils.ViewProfileFragment;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 public class ProfileActivity extends AppCompatActivity{
@@ -51,40 +54,50 @@ public class ProfileActivity extends AppCompatActivity{
 
          */
         if(intent.hasExtra(getString(R.string.calling_activity))){
-//            Log.d(TAG, "init: searching for user object attached as intent extra");
-//            if(intent.hasExtra(getString(R.string.intent_user))){
-//                User user = intent.getParcelableExtra(getString(R.string.intent_user));
-//                if(!user.getUser_id().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-//
-//                    // Used in situation where user clicks on profile that is NOT his/her own
-//                    Log.d(TAG, "init: inflating view profile");
-//                    ViewProfileFragment fragment = new ViewProfileFragment();
-//                    Bundle args = new Bundle();
-//                    args.putParcelable(getString(R.string.intent_user),
-//                            intent.getParcelableExtra(getString(R.string.intent_user)));
-//                    fragment.setArguments(args);
-//
-//                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                    transaction.replace(R.id.container, fragment);
-//                    transaction.addToBackStack(getString(R.string.view_profile_fragment));
-//                    transaction.commit();
-//                }else{
-//
-//                    // Used in situation where user might click on his/her own profile via the
-//                    // profileImage that is displayed with every post (Check mprofileImage onClick in
-//                    // MainfeedListAdapter)
+            Log.d(TAG, "init: searching for user object attached as intent extra");
+            if(intent.hasExtra(getString(R.string.intent_user))){
+                User user = intent.getParcelableExtra(getString(R.string.intent_user));
+                /**
+                 * "1111" was hardcoded!!!
+                 * Later on we need to change it to "FirebaseAuth.getInstance().getCurrentUser().getUid())"
+                 *
+                 * So we are checking if the User passed to this Activity is the currently signed in user.
+                 * If-Not, then we go to ViewProfileFragment, and pass along the User object.
+                 *
+                 * If the User's id DOES match the currently signed in user, then we simply go to
+                 * ProfileFragment
+                 */
+                if(!user.getUser_id().equals("1111")){
 
-//                    // (Since users can also see their own posts on the Main Feed)
-//                    Log.d(TAG, "init: inflating Profile");
-//                    ProfileFragment fragment = new ProfileFragment();
-//                    FragmentTransaction transaction = ProfileActivity.this.getSupportFragmentManager().beginTransaction();
-//                    transaction.replace(R.id.container, fragment);
-//                    transaction.addToBackStack(getString(R.string.profile_fragment));
-//                    transaction.commit();
-//                }
-//            }else{
-//                Toast.makeText(mContext, "something went wrong", Toast.LENGTH_SHORT).show();
-//            }
+                    // Used in situation where user clicks on profile that is NOT his/her own
+                    Log.d(TAG, "init: inflating view profile");
+                    ViewProfileFragment fragment = new ViewProfileFragment();
+                    Bundle args = new Bundle();
+                    args.putParcelable(getString(R.string.intent_user),
+                            intent.getParcelableExtra(getString(R.string.intent_user)));
+                    fragment.setArguments(args);
+
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.container, fragment);
+                    transaction.addToBackStack(getString(R.string.view_profile_fragment));
+                    transaction.commit();
+                }else{
+
+                    // Used in situation where user might click on his/her own profile via the
+                    // profileImage that is displayed with every post (Check mprofileImage onClick in
+                    // MainfeedListAdapter)
+
+                    // (Since users can also see their own posts on the Main Feed)
+                    Log.d(TAG, "init: inflating Profile");
+                    ProfileFragment fragment = new ProfileFragment();
+                    FragmentTransaction transaction = ProfileActivity.this.getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.container, fragment);
+                    transaction.addToBackStack(getString(R.string.profile_fragment));
+                    transaction.commit();
+                }
+            }else{
+                Toast.makeText(mContext, "something went wrong", Toast.LENGTH_SHORT).show();
+            }
 
         }else{
             // Used when user clicks on BottomNavigationView tab that starts ProfileActivity

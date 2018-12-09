@@ -3,6 +3,12 @@ package com.cafemanager.muse.Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+ *  User implements Parcelable because Objects of type Parcelable are able to
+ *  be passed in a Bundle. So whenever we want to pass a User object in between Activities,
+ *  we can.
+ */
+
 public class User implements Parcelable{
 
     /**
