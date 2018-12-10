@@ -1,9 +1,8 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
 
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <ScrollView
-        android:layout_width="match_parent"
+    android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
@@ -11,7 +10,6 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:padding="20dp">
-
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="120dp"
@@ -32,9 +30,7 @@
                 android:textColor="@color/link_blue"
                 android:textSize="16sp"/>
 
-
-
-            <!-- username section -->
+            <!-- username section-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -46,7 +42,7 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:src="@drawable/ic_username"
+                    android:src="@drawable/ic_usernameph"
                     android:layout_centerVertical="true"/>
 
                 <EditText
@@ -60,13 +56,12 @@
                     android:hint="username"/>
 
             </RelativeLayout>
-
-
-            <!-- display_name section -->
+            <!-- display_name section-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_below="@+id/relLayout1"
+
                 android:background="@drawable/grey_border_bottom"
                 android:id="@+id/relLayout2"
                 android:layout_marginTop="15dp">
@@ -74,7 +69,7 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:src="@drawable/ic_display_name"
+                    android:src="@drawable/ic_displaynameph"
                     android:layout_centerVertical="true"/>
 
                 <EditText
@@ -89,12 +84,12 @@
 
             </RelativeLayout>
 
-
-            <!-- website section -->
+            <!-- website section-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_below="@+id/relLayout2"
+
                 android:background="@drawable/grey_border_bottom"
                 android:id="@+id/relLayout3"
                 android:layout_marginTop="15dp">
@@ -102,7 +97,7 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:src="@drawable/ic_web"
+                    android:src="@drawable/ic_websiteph"
                     android:layout_centerVertical="true"/>
 
                 <EditText
@@ -117,12 +112,12 @@
 
             </RelativeLayout>
 
-
-            <!-- description section -->
+            <!-- description section-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_below="@+id/relLayout3"
+
                 android:background="@drawable/grey_border_bottom"
                 android:id="@+id/relLayout4"
                 android:layout_marginTop="15dp">
@@ -130,7 +125,7 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:src="@drawable/ic_description"
+                    android:src="@drawable/ic_descriptionph"
                     android:layout_centerVertical="true"/>
 
                 <EditText
@@ -145,13 +140,12 @@
 
             </RelativeLayout>
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
+                android:textSize="25dp"
                 android:text="PRIVATE INFORMATION"
-                android:layout_below="@id/relLayout4"
+                android:layout_below="@+id/relLayout4"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="50dp"
                 android:textColor="@color/black"
@@ -159,11 +153,12 @@
                 android:id="@+id/textPrivateInfo"/>
 
 
-            <!-- email section -->
+            <!-- email section-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_below="@+id/textPrivateInfo"
+
                 android:background="@drawable/grey_border_bottom"
                 android:id="@+id/relLayout5"
                 android:layout_marginTop="15dp">
@@ -171,7 +166,7 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:src="@drawable/ic_email"
+                    android:src="@drawable/ic_emailph"
                     android:layout_centerVertical="true"/>
 
                 <EditText
@@ -184,37 +179,41 @@
                     android:inputType="textNoSuggestions"
                     android:hint="Email"/>
 
+
+
             </RelativeLayout>
 
-            <!-- phone number section -->
-            <RelativeLayout
+        <!-- phone number section-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/relLayout5"
+
+            android:background="@drawable/grey_border_bottom"
+            android:id="@+id/relLayout6"
+            android:layout_marginTop="15dp">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_phoneph"
+                android:layout_centerVertical="true"/>
+
+            <EditText
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@+id/relLayout5"
-                android:background="@drawable/grey_border_bottom"
-                android:id="@+id/relLayout6"
-                android:layout_marginTop="15dp">
+                android:layout_height="wrap_content"
+                android:id="@+id/phoneNumber"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="40dp"
+                android:background="@null"
+                android:inputType="textNoSuggestions"
+                android:hint="Phone Number"/>
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:src="@drawable/ic_phone"
-                    android:layout_centerVertical="true"/>
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/phoneNumber"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="40dp"
-                    android:background="@null"
-                    android:inputType="textNoSuggestions"
-                    android:hint="Phone Number"/>
-
-            </RelativeLayout>
 
         </RelativeLayout>
 
-
+        </RelativeLayout>
     </ScrollView>
-    </merge>
+
+</merge>

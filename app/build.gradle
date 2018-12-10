@@ -1,16 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
     defaultConfig {
-        applicationId "umbrella.com.muse"
-        minSdkVersion 18
-        targetSdkVersion 27
+        applicationId "com.cafemanager.musefoundation"
+        minSdkVersion 16
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -22,39 +20,25 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    //Design library for Coordinator Layout and Toolbars
-    implementation 'com.android.support:design:27.1.1'
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.5.1'
 
-    //BottomNavigationViewEx library
-    implementation 'com.github.ittianyu:BottomNavigationViewEx:1.1.9'
+    //Design Library for coordinator layout and toolbars
+    implementation 'com.android.support:design:28.0.0'
 
-    //Circle ImageView
+    //BottomNavigationViewEx Library
+    // implementation 'com.github.ittianyu:BottomNavigationViewEx:1.1.9'
+    implementation 'com.github.stanwood:BottomNavigationViewEx:41e335d'
+
+    //circle imageview
     implementation 'de.hdodenhof:circleimageview:2.1.0'
 
-    //Universal image loader
+    //universal image loader
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-
-    //firebase authentication
-    implementation 'com.google.firebase:firebase-auth:16.0.5'
-
-    //firebase database
-    implementation 'com.google.firebase:firebase-database:16.0.4'
-
-    //firebase storage
-    implementation 'com.google.firebase:firebase-storage:16.0.4'
-
-    //firevase core
-    implementation 'com.google.firebase:firebase-core:16.0.4'
-
-
 }
-
-//Firebase
-apply plugin: 'com.google.gms.google-services'
