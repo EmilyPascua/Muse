@@ -1,6 +1,47 @@
 <resources>
-    <string name="app_name">MuseFoundation</string>
+    <string name="app_name">Muse</string>
+    <string name="description">Description: </string>
+
+    <!-- Activity Names -->
+    <string name="profile_activity">Profile Activity</string>
+    <string name="search_activity">Search Activity</string>
+
+    <!--Fragment Names-->
     <string name="edit_profile_fragment">Edit Profile</string>
+    <string name="profile_fragment">Profile</string>
+    <string name="view_profile_fragment">View Profile</string>
     <string name="sign_out_fragment">Sign Out</string>
-    <string name="title_activity_test">Test</string>
+
+
+    <!-- Intent Extras -->
+    <string name="calling_activity">calling_activity</string>
+    <string name="intent_user">intent_user</string>
+
+    <!--Firebase Roots-->
+    <string name="firebase_user_posts">user_posts</string>
+    <string name="firebase_users">users</string>
+    <string name="firebase_followers">followers</string>
+    <string name="firebase_following">following</string>
+    <string name="firebase_user_account_settings">user_account_settings</string>
+
+    <!--Firebase Fields-->
+    <string name="firebase_artist_name">artist_name</string>
+    <string name="firebase_song_name">song_name</string>
+    <string name="firebase_post_description">post_description</string>
+    <string name="firebase_song_preview">song_preview</string>
+    <string name="firebase_album_image">album_image</string>
+
+    <string name="firebase_username">username</string>
+    <string name="firebase_user_id">user_id</string>
+
+    <!--Hints-->
+    <string name="hint_search">Search&#8230;</string>
+
+    <!--Firebase Auth-->
+    <string name="auth_failed">Failed to Authenticate</string>
+    <string name="auth_success">Authentication Success</string>
+
+
+
+
 </resources>
