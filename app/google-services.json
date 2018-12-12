@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "572980581375-4p0pvcp1tsqt5omi6fn5rerhqa4i0oio.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cafemanager.muse",
+            "certificate_hash": "aabb537f9e59c9158f1ba52b3f66218c8b584b9d"
+          }
+        },
+        {
           "client_id": "572980581375-ond72c44qj96l0tclr5cb33lcgl3cskn.apps.googleusercontent.com",
           "client_type": 3
         }
