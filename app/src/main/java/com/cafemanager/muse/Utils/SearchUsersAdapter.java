@@ -154,8 +154,13 @@ public class SearchUsersAdapter extends RecyclerView.Adapter<SearchUsersAdapter.
 
 //                        Picasso.with(mContext).load(profileImageUrl).into(searchUsersHolder.profileImage);
 
-                        Picasso.get().load(profileImageUrl).into(profileImage);
+                        CircleImageView x = profileImage;
 
+                        if (profileImageUrl.equals("") || profileImageUrl.length() == 0){
+                            // Load a default if profileImageUrl String is empty
+                        } else {
+                            Picasso.get().load(profileImageUrl).into(profileImage);
+                        }
 
 
                     }
