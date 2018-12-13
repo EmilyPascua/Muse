@@ -4,6 +4,7 @@ package com.cafemanager.muse.Profile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,8 @@ import com.cafemanager.muse.Model.Track;
 import com.cafemanager.muse.R;
 import com.cafemanager.muse.Utils.BottomNavigationViewHelper;
 import com.cafemanager.muse.Utils.MusicAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,6 +52,9 @@ public class ProfileFragment extends Fragment {
     // Firebase
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
+
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
 
     // Widgets
@@ -85,6 +91,7 @@ public class ProfileFragment extends Fragment {
         mContext = getActivity();
 
 
+        setupFirebaseAuth();
 
         setupToolbar();
         setupBottomNavigationView();
@@ -143,7 +150,7 @@ public class ProfileFragment extends Fragment {
          *  Get all posts for a specific user. Rn we are hardcoding "1111" until
          *  we can get the Auth state of the current user.
          */
-        Query query = myRef.child(getString(R.string.firebase_user_posts)).child("1111");
+        Query query = myRef.child(getString(R.string.firebase_user_posts)).child(mAuth.getCurrentUser().getUid());
 
 
 
@@ -201,7 +208,8 @@ public class ProfileFragment extends Fragment {
         mPostsCount = 0;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        Query query = reference.child(getString(R.string.firebase_user_posts)).child("1111");
+//        Query query = reference.child(getString(R.string.firebase_user_posts)).child("1111");
+        Query query = reference.child(getString(R.string.firebase_user_posts)).child(mAuth.getCurrentUser().getUid());
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -228,7 +236,7 @@ public class ProfileFragment extends Fragment {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference.child(getString(R.string.firebase_followers)) // followers  node
-                .child("1111");
+                .child(mAuth.getCurrentUser().getUid());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -251,7 +259,7 @@ public class ProfileFragment extends Fragment {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference.child(getString(R.string.firebase_following))
-                .child("1111");
+                .child(mAuth.getCurrentUser().getUid());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -312,4 +320,45 @@ public class ProfileFragment extends Fragment {
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);
     }
+
+
+    private void setupFirebaseAuth(){
+        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth");
+
+        mAuth = FirebaseAuth.getInstance();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                if (user != null){
+                    Log.d(TAG, "onAuthStateChanged: signed_in");
+                } else {
+                    Log.d(TAG, "onAuthStateChanged: signed_out");
+                }
+
+            }
+        };
+
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+        // Check if user is signed in (non-null) and update UI accordingly.
+    }
+
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        if (mAuthListener != null){
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+
+    }
+
 }

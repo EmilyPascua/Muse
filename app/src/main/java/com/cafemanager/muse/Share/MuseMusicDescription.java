@@ -18,6 +18,7 @@ import com.cafemanager.muse.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -32,12 +33,17 @@ public class MuseMusicDescription extends AppCompatActivity {
     private String mAlbumUrl;
     private String mPreviewUrl;
 
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_musicdescription);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        setupFirebaseAuth();
 
         mPostDescription = (EditText) findViewById(R.id.post_description);
 
@@ -105,11 +111,11 @@ public class MuseMusicDescription extends AppCompatActivity {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
             // Push/obtain key of new Post
-            String postKey = databaseReference.child(getString(R.string.firebase_user_posts)).child("1111").push().getKey();
+            String postKey = databaseReference.child(getString(R.string.firebase_user_posts)).child(mAuth.getCurrentUser().getUid()).push().getKey();
 
 
             databaseReference.child("user_posts")
-                    .child("1111")
+                    .child(mAuth.getCurrentUser().getUid())
                     .child(postKey).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -135,5 +141,44 @@ public class MuseMusicDescription extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setupFirebaseAuth(){
+        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth");
+
+        mAuth = FirebaseAuth.getInstance();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                if (user != null){
+                    Log.d(TAG, "onAuthStateChanged: signed_in");
+                } else {
+                    Log.d(TAG, "onAuthStateChanged: signed_out");
+                }
+
+            }
+        };
+
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+        // Check if user is signed in (non-null) and update UI accordingly.
+    }
+
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        if (mAuthListener != null){
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+
     }
 }

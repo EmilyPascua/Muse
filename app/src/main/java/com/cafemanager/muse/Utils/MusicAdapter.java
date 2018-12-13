@@ -64,11 +64,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
 
 
 
-
-
     }
-
-
 
 
 

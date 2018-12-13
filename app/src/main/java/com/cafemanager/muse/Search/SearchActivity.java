@@ -44,6 +44,8 @@ public class SearchActivity extends AppCompatActivity{
     private ArrayList<User> mUserList;
     private SearchUsersAdapter mSearchUsersAdapter;
 
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         Log.d(TAG, "onCreate: started.");

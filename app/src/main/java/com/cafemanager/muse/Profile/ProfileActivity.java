@@ -3,6 +3,7 @@ package com.cafemanager.muse.Profile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -19,11 +20,16 @@ import com.cafemanager.muse.Model.User;
 import com.cafemanager.muse.R;
 import com.cafemanager.muse.Utils.BottomNavigationViewHelper;
 import com.cafemanager.muse.Utils.ViewProfileFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 public class ProfileActivity extends AppCompatActivity{
     private  static  final String TAG = "ProfileActivity";
     private Context mContext = ProfileActivity.this;
+
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     private static  final int ACTIVITY_NUM = 4;
 
@@ -36,6 +42,7 @@ public class ProfileActivity extends AppCompatActivity{
         //mProgressBar = (ProgressBar) findViewById(R.id.profileProgressBar);
         //mProgressBar.setVisibility(View.GONE);
 
+        setupFirebaseAuth();
         init();
     }
 
@@ -67,7 +74,7 @@ public class ProfileActivity extends AppCompatActivity{
                  * If the User's id DOES match the currently signed in user, then we simply go to
                  * ProfileFragment
                  */
-                if(!user.getUser_id().equals("1111")){
+                if(!user.getUser_id().equals(mAuth.getCurrentUser().getUid())){
 
                     // Used in situation where user clicks on profile that is NOT his/her own
                     Log.d(TAG, "init: inflating view profile");
@@ -119,6 +126,45 @@ public class ProfileActivity extends AppCompatActivity{
             getSupportFragmentManager().popBackStack();
         else
             finish();    // Finish the activity
+    }
+
+    private void setupFirebaseAuth(){
+        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth");
+
+        mAuth = FirebaseAuth.getInstance();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                if (user != null){
+                    Log.d(TAG, "onAuthStateChanged: signed_in");
+                } else {
+                    Log.d(TAG, "onAuthStateChanged: signed_out");
+                }
+
+            }
+        };
+
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+        // Check if user is signed in (non-null) and update UI accordingly.
+    }
+
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        if (mAuthListener != null){
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+
     }
 
 }
