@@ -1,6 +1,7 @@
 package com.cafemanager.muse.Share;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,6 +35,8 @@ public class MuseMusicDescription extends AppCompatActivity {
     private String mAlbumUrl;
     private String mPreviewUrl;
 
+    private FloatingActionButton floatingShareButton;
+
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -43,10 +47,28 @@ public class MuseMusicDescription extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("New Post");
-        toolbar.setBackgroundColor(getResources().getColor(R.color.white));
+
+//        toolbar.setBackgroundColor(getResources().getColor(R.color.white));
         setupFirebaseAuth();
 
         mPostDescription = (EditText) findViewById(R.id.post_description);
+
+        floatingShareButton = findViewById(R.id.floating_action_post);
+        floatingShareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createPost();
+            }
+        });
+
+//        FloatingActionButton fab = findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         Bundle trackArtist = getIntent().getExtras();
         Bundle trackName = getIntent().getExtras();
@@ -84,9 +106,44 @@ public class MuseMusicDescription extends AppCompatActivity {
     }
 
 
+    private void createPost() {
+        Post post = new Post();
+        post.setPost_description(mPostDescription.getText().toString());
+        post.setArtist_name(mTrackArtist);
+        post.setSong_name(mTrackName);
+        post.setAlbum_image(mAlbumUrl);
+        post.setSong_preview(mPreviewUrl);
+
+        // Push new Post object to Firebase
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        // Push/obtain key of new Post
+        String postKey = databaseReference.child(getString(R.string.firebase_user_posts)).child(mAuth.getCurrentUser().getUid()).push().getKey();
+
+
+        databaseReference.child("user_posts")
+                .child(mAuth.getCurrentUser().getUid())
+                .child(postKey).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(com.cafemanager.muse.Share.MuseMusicDescription.this, "Post Created!",
+                        Toast.LENGTH_LONG).show();
+                finish();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "Failed to create post");
+
+                Toast.makeText(com.cafemanager.muse.Share.MuseMusicDescription.this, "Post Failed...",
+                        Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
+    }
     /**
      *
-     * @param item
+     * @param //item
      * @return
      *
      * Will create Post object using member variables for this specific music description.
@@ -95,54 +152,54 @@ public class MuseMusicDescription extends AppCompatActivity {
      * Will display Toast then finish the Activity for both Success/Failure scenarios.
      */
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if(item.getItemId() == R.id.action_post) {
-
-            // Create/Configure Post
-            Post post = new Post();
-            post.setPost_description(mPostDescription.getText().toString());
-            post.setArtist_name(mTrackArtist);
-            post.setSong_name(mTrackName);
-            post.setAlbum_image(mAlbumUrl);
-            post.setSong_preview(mPreviewUrl);
-
-            // Push new Post object to Firebase
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-
-            // Push/obtain key of new Post
-            String postKey = databaseReference.child(getString(R.string.firebase_user_posts)).child(mAuth.getCurrentUser().getUid()).push().getKey();
-
-
-            databaseReference.child("user_posts")
-                    .child(mAuth.getCurrentUser().getUid())
-                    .child(postKey).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(MuseMusicDescription.this, "Post Created!",
-                                    Toast.LENGTH_LONG).show();
-                            finish();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d(TAG, "Failed to create post");
-
-                            Toast.makeText(MuseMusicDescription.this, "Post Failed...",
-                                    Toast.LENGTH_LONG).show();
-                            finish();
-                        }
-                    });;
-
-            // Create Post and push to "user_post" under "1111" (later on we'll use Auth
-            // to push post to correct user_id node)
-
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        if(item.getItemId() == R.id.action_post) {
+//
+//            // Create/Configure Post
+//            Post post = new Post();
+//            post.setPost_description(mPostDescription.getText().toString());
+//            post.setArtist_name(mTrackArtist);
+//            post.setSong_name(mTrackName);
+//            post.setAlbum_image(mAlbumUrl);
+//            post.setSong_preview(mPreviewUrl);
+//
+//            // Push new Post object to Firebase
+//            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+//
+//            // Push/obtain key of new Post
+//            String postKey = databaseReference.child(getString(R.string.firebase_user_posts)).child(mAuth.getCurrentUser().getUid()).push().getKey();
+//
+//
+//            databaseReference.child("user_posts")
+//                    .child(mAuth.getCurrentUser().getUid())
+//                    .child(postKey).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        @Override
+//                        public void onSuccess(Void aVoid) {
+//                            Toast.makeText(MuseMusicDescription.this, "Post Created!",
+//                                    Toast.LENGTH_LONG).show();
+//                            finish();
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Log.d(TAG, "Failed to create post");
+//
+//                            Toast.makeText(MuseMusicDescription.this, "Post Failed...",
+//                                    Toast.LENGTH_LONG).show();
+//                            finish();
+//                        }
+//                    });;
+//
+//            // Create Post and push to "user_post" under "1111" (later on we'll use Auth
+//            // to push post to correct user_id node)
+//
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     private void setupFirebaseAuth(){
         Log.d(TAG, "setupFirebaseAuth: setting up firebase auth");

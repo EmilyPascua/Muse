@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class ShareActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>{
     private  static final String TAG = "ShareActivity";
-    private Context mContext = ShareActivity.this;
+    private Context mContext = com.cafemanager.muse.Share.ShareActivity.this;
     private static  final int ACTIVITY_NUM = 2;
     private static final int LOADER_ID = 1;
     private static final String SEARCH_QUERY_URL_EXTRA = "searchQuery";
@@ -50,7 +50,7 @@ public class ShareActivity extends AppCompatActivity implements LoaderManager.Lo
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Add Music");
-        toolbar.setBackgroundColor(getResources().getColor(R.color.white));
+//        toolbar.setBackgroundColor(getResources().getColor(R.color.white));
 
 
         mSearchBoxEditText = (EditText) findViewById(R.id.et_search_box);
