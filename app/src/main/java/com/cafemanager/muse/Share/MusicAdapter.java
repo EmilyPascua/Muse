@@ -80,7 +80,6 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
         }
 
         void createMediaPlayer(String track){
-            Toast.makeText(mContext,"Play Song", Toast.LENGTH_LONG);
             try {
                 mediaPlayer.reset();
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);

@@ -5,6 +5,6 @@
         android:id="@+id/action_post"
         android:orderInCategory="1"
         app:showAsAction="ifRoom"
-        android:title="Submit"
+        android:title="Share"
         />
 </menu>

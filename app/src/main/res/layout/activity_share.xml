@@ -16,7 +16,7 @@
         android:id="@+id/et_search_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter a query, then click Search"
+        android:hint="Enter Track name, Album, Artist..."
         android:textSize="22sp" />
 
     <ProgressBar

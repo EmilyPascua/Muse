@@ -49,6 +49,8 @@ public class ShareActivity extends AppCompatActivity implements LoaderManager.Lo
         setContentView(R.layout.activity_share);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Add Music");
+
 
         mSearchBoxEditText = (EditText) findViewById(R.id.et_search_box);
         mProgressBar = (ProgressBar) findViewById(R.id.progress);

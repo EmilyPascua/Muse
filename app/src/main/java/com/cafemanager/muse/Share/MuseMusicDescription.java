@@ -42,6 +42,8 @@ public class MuseMusicDescription extends AppCompatActivity {
         setContentView(R.layout.activity_musicdescription);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("New Post");
+
 
         setupFirebaseAuth();
 
