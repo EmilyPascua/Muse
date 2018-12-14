@@ -52,6 +52,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>{
+    // check
 
     private Context mContext = HomeActivity.this;
     private  static  final String TAG = "HomeActivity";
@@ -110,7 +111,7 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public void listenAndLoad() {
 
-        
+
             Query query = mDatabaseReference.child(getString(R.string.firebase_user_posts) );
 
 
