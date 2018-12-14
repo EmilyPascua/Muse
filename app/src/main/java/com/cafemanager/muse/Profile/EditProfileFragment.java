@@ -47,8 +47,8 @@ public class EditProfileFragment extends Fragment {
     private FirebaseMethods mFirebaseMethods;
 
     //EditProfile Fragment widgets
-    private EditText mDisplayName, mUsername, mWebsite, mDescription, mEmail, mPhoneNumber;
-    private TextView mChangeProfilePhoto;
+    private EditText mDisplayName, mUsername, mWebsite, mDescription, mPhoneNumber;
+    private TextView mChangeProfilePhoto, mEmail;
     private CircleImageView mProfilePhoto;
 
     private String mUserID;
@@ -63,7 +63,7 @@ public class EditProfileFragment extends Fragment {
         mUsername = (EditText) view.findViewById(R.id.username);
         mWebsite = (EditText) view.findViewById(R.id.website);
         mDescription = (EditText) view.findViewById(R.id.description);
-        mEmail = (EditText) view.findViewById(R.id.email);
+        mEmail = (TextView) view.findViewById(R.id.email);
         mPhoneNumber = (EditText) view.findViewById(R.id.phoneNumber);
         mChangeProfilePhoto = (TextView) view.findViewById(R.id.changeProfilePhoto);
         mFirebaseMethods = new FirebaseMethods(getActivity());
@@ -88,6 +88,7 @@ public class EditProfileFragment extends Fragment {
             public void onClick(View v) {
                 Log.d(TAG, "onClick: attempting to save changes.");
                 saveProfileSettings();
+                getActivity().finish();
             }
         });
 
@@ -129,6 +130,26 @@ public class EditProfileFragment extends Fragment {
                 }
                 //case2: the user changed their username therefore we need to check for uniqueness
                 else{
+                }
+
+                /**
+                 * change the rest of the settings that do not require uniqueness
+                 */
+                if(!mUserSettings.getSettings().getDisplay_name().equals(displayName)){
+                    //update displayname
+                    mFirebaseMethods.updateUserAccountSettings(displayName, null, null, 0);
+                }
+                if(!mUserSettings.getSettings().getWebsite().equals(website)){
+                    //update website
+                    mFirebaseMethods.updateUserAccountSettings(null, website, null, 0);
+                }
+                if(!mUserSettings.getSettings().getDescription().equals(description)){
+                    //update description
+                    mFirebaseMethods.updateUserAccountSettings(null, null, description, 0);
+                }
+                if(!mUserSettings.getSettings().getProfile_photo().equals(phoneNumber)){
+                    //update phoneNumber
+                    mFirebaseMethods.updateUserAccountSettings(null, null, null, phoneNumber);
                 }
             }
             @Override
