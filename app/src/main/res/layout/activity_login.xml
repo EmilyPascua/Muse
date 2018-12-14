@@ -11,13 +11,13 @@
         android:paddingTop="55dp"
         android:paddingLeft="25dp"
         android:paddingRight="25dp">
-        
+
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="75dp"
-            android:src="@drawable/common_google_signin_btn_icon_dark"
+            android:layout_width="124dp"
+            android:layout_height="121dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="40dp"/>
+            android:layout_marginBottom="40dp"
+            android:src="@mipmap/ic_muse_logo" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
