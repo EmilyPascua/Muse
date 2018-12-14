@@ -48,4 +48,12 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:hint="Write a Caption..."/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_action_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_add"
+        android:layout_margin="16dp" />
 </LinearLayout>

@@ -20,6 +20,9 @@ public class LikesActivity extends AppCompatActivity{
     @Override
     protected  void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        /**
+         *  This Activity is sharing the same layout as HomeActivity
+         */
         setContentView(R.layout.activity_home);
         Log.d(TAG, "onCreate: started.");
 

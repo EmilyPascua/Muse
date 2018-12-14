@@ -3,18 +3,25 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:layout_margin="5dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:elevation="8dp"
+    card_view:cardElevation="10dp"
+    card_view:cardBackgroundColor="@color/colorPrimaryDark"
+    card_view:cardCornerRadius="8dp"
+    >
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/list_item">
+        android:id="@+id/list_item"
+        >
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/album_url"/>
+            android:id="@+id/album_url"
+            android:background="#aaf0d1"
+            />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -27,17 +34,20 @@
 
                 android:layout_width="165dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                >
 
                 <TextView
                     android:id="@+id/track_name"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"/>
                 <TextView
                     android:id="@+id/track_artist"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"/>
 
                 <TextView
                     android:id="@+id/line"
@@ -45,10 +55,11 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:gravity="center_horizontal"
+                    android:textColor="@color/white"
 
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#D3D3D3"
+                    android:background="#fff"
                     />
 
 
@@ -56,7 +67,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/description"
-                    android:id="@+id/description"/>
+                    android:id="@+id/description"
+                    android:textColor="@color/white"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -71,8 +84,10 @@
                     android:id="@+id/post_play_button"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+
                     android:background="@drawable/ic_play_circle_outline_black_24dp"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:tint="@color/colorAccent"/>
                 <!--<Button-->
                     <!--android:id="@+id/add_button"-->
                     <!--android:layout_width="50dp"-->
