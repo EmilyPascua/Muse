@@ -92,7 +92,7 @@ public class ViewProfileFragment extends Fragment {
         mFollow = (TextView) view.findViewById(R.id.follow);
         mUnfollow = (TextView) view.findViewById(R.id.unfollow);
 
-        mProfileName = (TextView) view.findViewById(R.id.profileName);
+        mProfileName = (TextView) view.findViewById(R.id.username);
         mProfileName.setText(mUser.getUsername());
 
 
