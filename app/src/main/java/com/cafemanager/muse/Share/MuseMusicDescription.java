@@ -43,8 +43,7 @@ public class MuseMusicDescription extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("New Post");
-
-
+        toolbar.setBackgroundColor(getResources().getColor(R.color.white));
         setupFirebaseAuth();
 
         mPostDescription = (EditText) findViewById(R.id.post_description);

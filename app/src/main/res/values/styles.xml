@@ -26,9 +26,6 @@
         <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
         -->
     </style>
-    <style name="statusBarStyle" parent="@android:style/Theme.DeviceDefault.Light">
-        <item name="android:windowLightStatusBar">false</item>
-    </style>
 
     <!-- This configures the styles for the title within the Toolbar  -->
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">

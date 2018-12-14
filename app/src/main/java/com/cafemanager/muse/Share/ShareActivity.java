@@ -50,6 +50,7 @@ public class ShareActivity extends AppCompatActivity implements LoaderManager.Lo
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Add Music");
+        toolbar.setBackgroundColor(getResources().getColor(R.color.white));
 
 
         mSearchBoxEditText = (EditText) findViewById(R.id.et_search_box);
