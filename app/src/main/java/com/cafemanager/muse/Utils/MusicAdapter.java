@@ -27,7 +27,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
 
     private static final String TAG = "MusicAdapter";
     Context mContext;
-    private List<Post> mPosts;
+    List<Post> mPosts;
     
 
     // Pass in any necessary data to constructor so Adapter can attach the data to Music Player widget
@@ -50,8 +50,6 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
         return viewHolder;
     }
 
-
-
     @Override
     public void onBindViewHolder(MusicHolder holder, int position) {
 
@@ -61,24 +59,17 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
         Log.d(TAG, "position: " + position);
 
         holder.bind(position);
-
-
-
-
-
     }
-
-
-
-
-
 
     @Override
     public int getItemCount() {
         return mPosts.size();
     }
 
-
+    public void setPosts(List<Post> posts){
+        this.mPosts = posts;
+        notifyDataSetChanged();
+    }
 
     public class MusicHolder extends RecyclerView.ViewHolder{
 

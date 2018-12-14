@@ -1,5 +1,12 @@
 package com.cafemanager.muse.Model;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@IgnoreExtraProperties
 public class Track {
     private String trackId;
     private String artistId;
@@ -23,6 +30,21 @@ public class Track {
         this.albumUrl = "http://direct.napster.com/imageserver/v2/albums/"+ albumId + "/images/500x500.jpg";
         this.artistId = artistId;
         this.albumId = albumId;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("trackId", trackId);
+        result.put("artistId", artistId);
+        result.put("albumId", albumId);
+        result.put("playbackInSeconds", playbackInSeconds);
+        result.put("trackName", trackName);
+        result.put("trackArtist", trackArtist);
+        result.put("previewUrl", previewUrl);
+        result.put("albumUrl", albumUrl);
+
+        return result;
     }
 
     public String getTrackId(){
@@ -87,4 +109,5 @@ public class Track {
     }
 
     public void setAlbumId(String albumId){ this.albumId = albumId;}
+
 }

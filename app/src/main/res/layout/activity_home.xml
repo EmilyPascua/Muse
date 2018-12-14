@@ -12,24 +12,56 @@
         android:layout_height="match_parent">
         <!-- top toolbar-->
         <RelativeLayout
+            android:id="@+id/relLayout1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/relLayout1">
+            android:layout_height="wrap_content">
 
-            <include layout="@layout/layout_top_tabs"/>
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="18dp"
+                android:layout_marginLeft="18dp"
+                android:src="@drawable/muse_image" />
+
+            <View android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#FFFFFF" />
+
+            <!--<include layout="@layout/layout_top_tabs" />-->
         </RelativeLayout>
         <!-- middle section (body)-->
         <RelativeLayout
+            android:id="@+id/relLayout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/relLayout2"
             android:layout_below="@+id/relLayout1">
 
-            <include layout="@layout/layout_center_viewpager"/>
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/home_feed_view"
+                    android:scrollbars="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
+            <include layout="@layout/layout_center_viewpager" />
 
         </RelativeLayout>
         <!-- bottom navigation-->
-        <include layout="@layout/layout_bottom_navigation_view"/>
+        <include layout="@layout/layout_bottom_navigation_view" />
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

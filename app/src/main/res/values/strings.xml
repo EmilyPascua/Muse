@@ -30,6 +30,7 @@
     <string name="firebase_post_description">post_description</string>
     <string name="firebase_song_preview">song_preview</string>
     <string name="firebase_album_image">album_image</string>
+    <string name="firebase_post_time">post_time</string>
 
     <string name="firebase_username">username</string>
     <string name="firebase_user_id">user_id</string>

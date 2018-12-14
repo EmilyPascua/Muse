@@ -19,14 +19,15 @@ import com.cafemanager.muse.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>{
     Context mContext;
-    ArrayList<Track> mTrack;
+    public static List<Track> mTracks;
 
-    public MusicAdapter(Context context, ArrayList<Track> track){
+    public MusicAdapter(Context context, List<Track> tracks){
         this.mContext = context;
-        this.mTrack = track;
+        this.mTracks = tracks;
     }
 
     @Override
@@ -47,8 +48,14 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
 
     @Override
     public int getItemCount() {
-        return mTrack.size();
+        return mTracks.size();
     }
+
+    public void setTracks(List<Track> tracks){
+        this.mTracks = tracks;
+        notifyDataSetChanged();
+    }
+
 
     public class MusicHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView albumUrl;
@@ -70,12 +77,12 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
 
         void bind(final int listIndex) {
 //            Picasso.with(mContext).load(mTrack.get(listIndex).getAlbumUrl()).into(albumUrl);
-            Picasso.get().load(mTrack.get(listIndex).getAlbumUrl()).into(albumUrl);
-            createMediaPlayer(mTrack.get(listIndex).getPreviewUrl());
+            Picasso.get().load(mTracks.get(listIndex).getAlbumUrl()).into(albumUrl);
+            createMediaPlayer(mTracks.get(listIndex).getPreviewUrl());
             triggerPlayButton();
             triggerAddButton(listIndex);
-            trackName.setText(mTrack.get(listIndex).getTrackName());
-            trackArtist.setText("By " + mTrack.get(listIndex).getTrackArtist());
+            trackName.setText(mTracks.get(listIndex).getTrackName());
+            trackArtist.setText("By " + mTracks.get(listIndex).getTrackArtist());
             itemView.setOnClickListener(this);
         }
 
@@ -123,31 +130,29 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, MuseMusicDescription.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("trackArtist",mTrack.get(listIndex).getTrackArtist());
-                    intent.putExtra("trackName",mTrack.get(listIndex).getTrackName());
-                    intent.putExtra("albumUrl", mTrack.get(listIndex).getAlbumUrl());
+                    intent.putExtra("trackArtist",mTracks.get(listIndex).getTrackArtist());
+                    intent.putExtra("trackName",mTracks.get(listIndex).getTrackName());
+                    intent.putExtra("albumUrl", mTracks.get(listIndex).getAlbumUrl());
 
                     /**
                      *  Adding preview as intentExtra as well, since we'll need to use this to play tracks
                      *  on user's profile
                      */
-                    intent.putExtra("previewUrl",mTrack.get(listIndex).getPreviewUrl());
+                    intent.putExtra("previewUrl",mTracks.get(listIndex).getPreviewUrl());
 
                     mContext.startActivity(intent);
                     //Just filler information
-                    Log.e("Information",mTrack.get(listIndex).getTrackName());
-                    Log.e("Information",mTrack.get(listIndex).getPreviewUrl());
-                    Log.e("Information",mTrack.get(listIndex).getAlbumUrl());
-                    Log.e("Information",mTrack.get(listIndex).getArtistId());
-                    Log.e("Information",mTrack.get(listIndex).getTrackArtist());
+                    Log.e("Information",mTracks.get(listIndex).getTrackName());
+                    Log.e("Information",mTracks.get(listIndex).getPreviewUrl());
+                    Log.e("Information",mTracks.get(listIndex).getAlbumUrl());
+                    Log.e("Information",mTracks.get(listIndex).getArtistId());
+                    Log.e("Information",mTracks.get(listIndex).getTrackArtist());
 
                 }
             });
         }
 
         @Override
-        public void onClick(View view) {
-        }
-
+        public void onClick(View view) {}
     }
 }

@@ -112,8 +112,8 @@ public class ShareActivity extends AppCompatActivity implements LoaderManager.Lo
     public void populateRecyclerView(String searchResults){
         Log.d("mycode", searchResults);
         tracks = JsonUtils.parseNews(searchResults);
-        mAdapter.mTrack.clear();
-        mAdapter.mTrack.addAll(tracks);
+        mAdapter.mTracks.clear();
+        mAdapter.mTracks.addAll(tracks);
         mAdapter.notifyDataSetChanged();
     }
 
