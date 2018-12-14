@@ -11,6 +11,14 @@
         android:paddingTop="55dp"
         android:paddingLeft="25dp"
         android:paddingRight="25dp">
+
+        <ImageView
+            android:layout_width="124dp"
+            android:layout_height="121dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="40dp"
+
+            android:src="@mipmap/ic_muse_logo" />
         
       <TextView
           android:layout_width="match_parent"
@@ -83,6 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Please wait..."
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:layout_alignBottom="@id/progressBar"

@@ -17,6 +17,7 @@
             android:layout_height="121dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="40dp"
+
             android:src="@mipmap/ic_muse_logo" />
 
         <android.support.design.widget.TextInputLayout
@@ -61,6 +62,7 @@
             android:layout_marginBottom="25dp"
             android:text="No account yet? Create one"
             android:layout_gravity="center"
+            android:textAlignment="center"
             android:textSize="16dp"
             android:id="@+id/link_signup"
             android:textColor="@color/link_blue"/>
@@ -68,10 +70,12 @@
     </LinearLayout>
 
     <ProgressBar
+        android:id="@+id/progressBar"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:id="@+id/progressBar"
-        android:layout_centerInParent="true"/>
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="153dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -79,6 +83,7 @@
         android:text="Please wait..."
         android:textColor="@color/black"
         android:textSize="20sp"
+        android:textAlignment="center"
         android:layout_alignBottom="@id/progressBar"
         android:layout_alignRight="@id/progressBar"
         android:layout_alignLeft="@id/progressBar"

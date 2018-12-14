@@ -45,9 +45,9 @@ public class HomeActivity extends AppCompatActivity {
     private void setupViewPager(){
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(new CameraFragment()); // index 0
-        adapter.addFragment(new HomeFragment());  // index 1
-        adapter.addFragment(new MessagesFragment());  // index 2
+        //adapter.addFragment(new CameraFragment()); // index 0 -> DELETED
+        adapter.addFragment(new HomeFragment());  // index 1 -> 0
+        adapter.addFragment(new ExploreFragment());  // index 2 -> 1
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.container);
         viewPager.setAdapter(adapter);
@@ -55,9 +55,9 @@ public class HomeActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_cameraph);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_instagramph);
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_arrowph);
+        //tabLayout.getTabAt(0).setIcon(R.drawable.ic_cameraph);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_following_music);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_explore_music);
     }
 
     //BottomNavigationView setup

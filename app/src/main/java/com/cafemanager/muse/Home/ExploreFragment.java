@@ -10,13 +10,13 @@ import android.view.ViewGroup;
 
 import com.cafemanager.muse.R;
 
-public class CameraFragment extends Fragment {
-    private static  final String TAG = "CameraFragment";
+public class ExploreFragment extends Fragment {
+    private static  final String TAG = "ExploreFragment";
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_camera, container, false);
+        View view = inflater.inflate(R.layout.fragment_explore, container, false);
         return view;
     }
 }
