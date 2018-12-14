@@ -32,7 +32,13 @@
     <string name="firebase_album_image">album_image</string>
 
     <string name="firebase_username">username</string>
+    <string name="firebase_display_name">display_name</string>
     <string name="firebase_user_id">user_id</string>
+    <string name="firebase_email">email</string>
+    <string name="firebase_website">website</string>
+    <string name="firebase_description">description</string>
+    <string name="firebase_phone_number">phone_number</string>
+
 
     <!--Hints-->
     <string name="hint_search">Search&#8230;</string>
@@ -40,6 +46,9 @@
     <!--Firebase Auth-->
     <string name="auth_failed">Failed to Authenticate</string>
     <string name="auth_success">Authentication Success</string>
+
+
+
 
 
 

@@ -45,25 +45,80 @@ public class FirebaseMethods {
         }
     }
 
+    /**
+     * Update 'user_account_settings' node for the current user
+     * @param displayName
+     * @param website
+     * @param description
+     * @param phoneNumber
+     */
+    public void updateUserAccountSettings(String displayName, String website, String description, long phoneNumber){
 
-    public boolean checkIfUsernameExists(String username, DataSnapshot dataSnapshot){
-        Log.d(TAG, "checkIfUsernameExists: checking if " + username + " already exists");
+        Log.d(TAG, "updateUserAccountSettings: updating user account settings.");
 
-        User user = new User();
-
-        for (DataSnapshot ds: dataSnapshot.child(mUserID).getChildren()){
-            Log.d(TAG, "checkIfUsernameExists: datasnapshot: " + ds);
-
-            user.setUsername(ds.getValue(User.class).getUsername());
-
-            if(StringManipulation.expandUsername(user.getUsername()).equals(username)){
-                Log.d(TAG, "checkIfUsernameExists: found an existing username " + user.getUsername() );
-
-                return  true;
-            }
+        if(displayName != null){
+            mMyRef.child(mContext.getString(R.string.firebase_user_account_settings))
+                    .child(mUserID)
+                    .child(mContext.getString(R.string.firebase_display_name))
+                    .setValue(displayName);
         }
-        return false;
+
+
+        if(website != null) {
+            mMyRef.child(mContext.getString(R.string.firebase_user_account_settings))
+                    .child(mUserID)
+                    .child(mContext.getString(R.string.firebase_website))
+                    .setValue(website);
+        }
+
+        if(description != null) {
+            mMyRef.child(mContext.getString(R.string.firebase_user_account_settings))
+                    .child(mUserID)
+                    .child(mContext.getString(R.string.firebase_description))
+                    .setValue(description);
+        }
+
+        if(phoneNumber != 0) {
+            mMyRef.child(mContext.getString(R.string.firebase_user_account_settings))
+                    .child(mUserID)
+                    .child(mContext.getString(R.string.firebase_phone_number))
+                    .setValue(phoneNumber);
+        }
     }
+
+    public void updateUsername(String username){
+        Log.d(TAG, "updateUsername: upadting username to: " + username);
+
+        mMyRef.child(mContext.getString(R.string.firebase_users))
+                .child(mUserID)
+                .child(mContext.getString(R.string.firebase_username))
+                .setValue(username);
+
+        mMyRef.child(mContext.getString(R.string.firebase_user_account_settings))
+                .child(mUserID)
+                .child(mContext.getString(R.string.firebase_username))
+                .setValue(username);
+    }
+
+
+//    public boolean checkIfUsernameExists(String username, DataSnapshot dataSnapshot){
+//        Log.d(TAG, "checkIfUsernameExists: checking if " + username + " already exists");
+//
+//        User user = new User();
+//
+//        for (DataSnapshot ds: dataSnapshot.child(mUserID).getChildren()){
+//            Log.d(TAG, "checkIfUsernameExists: datasnapshot: " + ds);
+//
+//            user.setUsername(ds.getValue(User.class).getUsername());
+//
+//            if(StringManipulation.expandUsername(user.getUsername()).equals(username)){
+//                Log.d(TAG, "checkIfUsernameExists: found an existing username " + user.getUsername() );
+//
+//                return  true;
+//            }
+//        }
+//        return false;
+//    }
 
 
     /**
@@ -111,7 +166,7 @@ public class FirebaseMethods {
                 0,
                 0,
                 0,
-                "",
+                profile_picture,
                 StringManipulation.condenseUsername(username),
                 website,
                 mUserID);

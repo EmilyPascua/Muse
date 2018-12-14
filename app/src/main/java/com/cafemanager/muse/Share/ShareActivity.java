@@ -27,7 +27,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class ShareActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>{
-    private  static  final String TAG = "ShareActivity";
+    private  static final String TAG = "ShareActivity";
     private Context mContext = ShareActivity.this;
     private static  final int ACTIVITY_NUM = 2;
     private static final int LOADER_ID = 1;
@@ -113,7 +113,7 @@ public class ShareActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     public void populateRecyclerView(String searchResults){
-        Log.d("mycode", searchResults);
+        Log.d(TAG, "populateRecyclerView: " + searchResults);
         tracks = JsonUtils.parseNews(searchResults);
         mAdapter.mTrack.clear();
         mAdapter.mTrack.addAll(tracks);
@@ -150,7 +150,7 @@ public class ShareActivity extends AppCompatActivity implements LoaderManager.Lo
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Log.d(TAG, musicQueryResults);
+                Log.d(TAG, "music query results: " + musicQueryResults);
                 return musicQueryResults;
             }
         };
@@ -158,7 +158,7 @@ public class ShareActivity extends AppCompatActivity implements LoaderManager.Lo
 
     @Override
     public void onLoadFinished(android.support.v4.content.Loader<String> loader, String data) {
-        Log.d("mycode", data);
+        Log.d(TAG, "onLoadFinished: " + data);
         mProgressBar.setVisibility(View.GONE);
         populateRecyclerView(data);
     }

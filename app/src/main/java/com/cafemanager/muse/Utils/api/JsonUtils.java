@@ -11,9 +11,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class JsonUtils {
+    private  static  final String TAG = "JsonUtils";
+
     public static ArrayList<Track> parseNews (String JSONString){
         ArrayList<Track> trackList = new ArrayList<>();
-        Log.e("track", JSONString);
+        Log.e(TAG, "parseNews using string: " + JSONString);
         try{
             JSONObject mainJSONObject = new JSONObject(JSONString);
             JSONObject search = mainJSONObject.getJSONObject("search");

@@ -180,6 +180,7 @@ public class ProfileFragment extends Fragment {
         Log.d(TAG, "setProfileWidgets: setting widgets with data retrieving from firebase database: " + userSettings.toString());
         Log.d(TAG, "setProfileWidgets: setting widgets with data retrieving from firebase database: " + userSettings.getSettings().getUsername());
         //User user = userSettings.getUser();
+        Log.d(TAG, "UserSettings.getSettings(): " + userSettings.getSettings());
         UserAccountSettings settings = userSettings.getSettings();
 //        UniversalImageLoader.setImage(settings.getProfile_photo(), mProfilePhoto, null, "");
 
