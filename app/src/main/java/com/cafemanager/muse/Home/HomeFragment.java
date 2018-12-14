@@ -122,32 +122,32 @@ public class HomeFragment extends Fragment {
 
     private void getListOfFollowing() {
 
+        if (mAuth.getCurrentUser() != null) {
+            Query query = myRef.child(getString(R.string.firebase_following)).child(mAuth.getCurrentUser().getUid());
 
-        Query query = myRef.child(getString(R.string.firebase_following)).child(mAuth.getCurrentUser().getUid());
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                        Log.d(TAG, "onDataChange: found following user:" + singleSnapshot.getKey());
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
-                    Log.d(TAG, "onDataChange: found following user:" + singleSnapshot.getKey());
+                        singleSnapshot.child(getString(R.string.firebase_user_id)).getValue();
 
-                    singleSnapshot.child(getString(R.string.firebase_user_id)).getValue();
+                        // Adding the userIDs of all the users we're following.
+                        // Going to use this list of IDs in a separate method to populate HomeFragment feed
+                        mFollowingIds.add(singleSnapshot.child(getString(R.string.firebase_user_id)).getValue().toString());
+                    }
 
-                    // Adding the userIDs of all the users we're following.
-                    // Going to use this list of IDs in a separate method to populate HomeFragment feed
-                    mFollowingIds.add(singleSnapshot.child(getString(R.string.firebase_user_id)).getValue().toString());
+                    setupFollowingFeed();
                 }
 
-                setupFollowingFeed();
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        Log.d(TAG, "Done getting userIDs. Following count: " + mFollowingIds.size());
-
+                }
+            });
+            Log.d(TAG, "Done getting userIDs. Following count: " + mFollowingIds.size());
+        }
     }
 
 
