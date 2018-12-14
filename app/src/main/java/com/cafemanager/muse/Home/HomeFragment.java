@@ -16,6 +16,8 @@ import com.cafemanager.muse.Model.Post;
 import com.cafemanager.muse.R;
 import com.cafemanager.muse.Utils.MainfeedListAdapter;
 import com.cafemanager.muse.Utils.MusicAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,44 +33,58 @@ public class HomeFragment extends Fragment {
     private static  final String TAG = "HomeFragment";
 
     private RecyclerView mRecyclerView;
-    private MainfeedListAdapter mMainfeedListAdapter;
+    MainfeedListAdapter mMainfeedListAdapter;
 
     // Firebase
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
+
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
+    private ArrayList<String> mFollowingIds;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
-
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.main_feed_recycler_view);
-        setupMainfeedList();
+        mFollowingIds = new ArrayList<>();
+
+        setupFirebaseAuth();
+
+        getListOfFollowing();
+
+        Log.d(TAG, "Attempting to set up FollowingFeed");
+        setupFollowingFeed();
 
         return view;
     }
 
-    private void setupMainfeedList() {
+    private void setupFollowingFeed() {
+
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         final ArrayList<Post> userPosts = new ArrayList<>();
 
-        Query query = myRef.child(getString(R.string.firebase_user_posts));
 
         /**
-         *  This will grab all the Posts of every user. Even the ones you aren't following
+         *  Do NOT for the love of god, move the line that initializes the adapter and sets
+         *  it to the RecyclerView
          */
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
-                    Log.d(TAG, "onDataChange: Found post:" + singleSnapshot.getValue());
 
-                    for(DataSnapshot singlePostSnapshot : singleSnapshot.getChildren()) {
-                        // Use singleSnapshot to get all the values you need for a single Post object
+        for(String followingID : mFollowingIds) {
+
+            Log.d(TAG, "setupFollowingFeed() userID: " + followingID);
+            Query query = myRef.child(getString(R.string.firebase_user_posts)).child(followingID);
+
+
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot singlePostSnapshot : dataSnapshot.getChildren()) {
                         Post post = new Post();
 
                         // Create Map (from your DataSnapshot) to get values you need easily
@@ -84,24 +100,99 @@ public class HomeFragment extends Fragment {
 
                         userPosts.add(post);
                     }
-
-
-
+                    mMainfeedListAdapter = new MainfeedListAdapter(getActivity(), userPosts);
+                    mRecyclerView.setAdapter(mMainfeedListAdapter);
                 }
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                mMainfeedListAdapter = new MainfeedListAdapter(getActivity(), userPosts);
+                }
+            });
+        }
 
 
-                mRecyclerView.setAdapter(mMainfeedListAdapter);
 
+
+
+
+
+
+    }
+
+    private void getListOfFollowing() {
+
+
+        Query query = myRef.child(getString(R.string.firebase_following)).child(mAuth.getCurrentUser().getUid());
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
+                    Log.d(TAG, "onDataChange: found following user:" + singleSnapshot.getKey());
+
+                    singleSnapshot.child(getString(R.string.firebase_user_id)).getValue();
+
+                    // Adding the userIDs of all the users we're following.
+                    // Going to use this list of IDs in a separate method to populate HomeFragment feed
+                    mFollowingIds.add(singleSnapshot.child(getString(R.string.firebase_user_id)).getValue().toString());
+                }
+
+                setupFollowingFeed();
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
+        Log.d(TAG, "Done getting userIDs. Following count: " + mFollowingIds.size());
+
+    }
+
+
+
+    private void setupFirebaseAuth(){
+        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth");
+
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
+
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                if (user != null){
+                    Log.d(TAG, "onAuthStateChanged: signed_in");
+                } else {
+                    Log.d(TAG, "onAuthStateChanged: signed_out");
+                }
+
+            }
+        };
+
+
+
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+        // Check if user is signed in (non-null) and update UI accordingly.
+    }
+
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        if (mAuthListener != null){
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
 
     }
 }

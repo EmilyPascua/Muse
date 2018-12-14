@@ -17,22 +17,31 @@ import com.cafemanager.muse.Model.Post;
 import com.cafemanager.muse.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainfeedListAdapter extends RecyclerView.Adapter<MainfeedListAdapter.MainfeedHolder> {
 
     private static final String TAG = "MusicAdapter";
     Context mContext;
-    private List<Post> mPosts;
+    List<Post> mPosts;
 
 
     // Pass in any necessary data to constructor so Adapter can attach the data to Music Player widget
     // mContext is used so that we can access LayoutInflater in onCreateViewHolder()
-    public MainfeedListAdapter(Context context, List<Post> posts) {
+    public MainfeedListAdapter(Context context, ArrayList<Post> posts) {
         mContext = context;
 
         mPosts = posts;
 
+    }
+
+
+
+    public void updatePosts(ArrayList<Post> updatedPosts) {
+        this.mPosts.clear();
+        this.mPosts = updatedPosts;
+        notifyDataSetChanged();
     }
 
     @Override
