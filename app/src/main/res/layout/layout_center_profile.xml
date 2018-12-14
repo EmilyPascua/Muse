@@ -76,7 +76,7 @@
                     android:id="@+id/display_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Mitch"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"/>
@@ -86,7 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="I live in Vancouver, BC"
+                    android:text="Loading..."
                     android:textColor="@color/black"
                     android:textSize="16sp"/>
 
@@ -95,7 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="https://codingwithmitch.com"
+                    android:text="http://goodgradeplease.com"
                     android:textColor="@color/link_blue"
                     android:textSize="16sp"
                     />

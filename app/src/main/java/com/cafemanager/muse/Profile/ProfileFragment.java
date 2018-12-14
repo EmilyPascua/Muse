@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cafemanager.muse.Model.Post;
@@ -74,7 +75,10 @@ public class ProfileFragment extends Fragment {
     // Widgets
     private TextView mPosts, mFollowers, mFollowing;
 
+
     private TextView mDisplayName, mUsername, mWebsite, mDescription;
+
+
 
     private Toolbar toolbar;
     private ImageView profileMenu;
@@ -112,6 +116,8 @@ public class ProfileFragment extends Fragment {
         mProfilePhoto = (CircleImageView) view.findViewById(R.id.profile_photo);
         mPosts = (TextView) view.findViewById(R.id.tvPosts);
 
+
+
         mProfilePhoto = (CircleImageView) view.findViewById(R.id.profile_photo);
 
         toolbar = (Toolbar) view.findViewById(R.id.profileToolBar);
@@ -130,10 +136,6 @@ public class ProfileFragment extends Fragment {
         setupBottomNavigationView();
 
 
-        // This should be moved to a separate method once we implement Firebase authentication
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
-        // This should be moved to a separate method once we implement Firebase authentication
 
 
         /**
@@ -191,10 +193,10 @@ public class ProfileFragment extends Fragment {
         mDescription.setText(settings.getDescription());
         mPosts.setText(String.valueOf(settings.getPosts()));
 
+
         //  Don't need these 2 because it's already handled in methods below
 //        mFollowing.setText(String.valueOf(settings.getFollowing()));
 //        mFollowers.setText(String.valueOf(settings.getFollowers()));
-//        mProgressBar.setVisibility(View.GONE);
     }
 
     private void setupRecyclerView() {
