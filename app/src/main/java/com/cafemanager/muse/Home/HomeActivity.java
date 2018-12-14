@@ -106,43 +106,14 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
 //        setupViewPager();
     }
 
-    public void getUsers() {
-        Query query = mDatabaseReference.child(getString(R.string.firebase_users)).orderByChild(getString(R.string.firebase_user_id));
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
 
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onChange adding users:" + dataSnapshot.getKey());
-
-                for(DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
-                    // A new track has been added, add it to the displayed list
-                    String user = singleSnapshot.getKey();
-
-                    if (user != null) {
-                        Log.d("empty user","NOT EMPTY!!!!!!");
-                        mUserIds.add(user);
-                    }
-                }
-                for(int i = 0 ; i < mUserIds.size() ; i++) {
-                    Log.d("username:",mUserIds.get(i).toString());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
-    }
 
     public void listenAndLoad() {
-        getUsers();
 
-        for (String id : mUserIds) {
-            Query query = mDatabaseReference.child(getString(R.string.firebase_user_posts)).child(id);
-            Log.d("Checking query:", id);
+        
+            Query query = mDatabaseReference.child(getString(R.string.firebase_user_posts) );
 
-            if (query == null) {
-                break;
-            }
+
             query.addListenerForSingleValueEvent(new ValueEventListener() {
 
                 @Override
@@ -150,23 +121,30 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
                     Log.d(TAG, "onChange:" + dataSnapshot.getKey());
 
                     for(DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
-                        // A new track has been added, add it to the displayed list
-                        Post post = dataSnapshot.getValue(Post.class);
 
-                        if (post != null) {
-                            // Create Map (from your DataSnapshot) to get values you need easily
-                            Map<String, Object> firebasePostMap = (HashMap<String, Object>) singleSnapshot.getValue();
+                        for(DataSnapshot singlePostSnapshot : singleSnapshot.getChildren()) {
 
-                            // Configure Post object
-                            post.setArtist_name(firebasePostMap.get(getString(R.string.firebase_artist_name)).toString());
-                            post.setSong_name(firebasePostMap.get(getString(R.string.firebase_song_name)).toString());
+                            Post post = singlePostSnapshot.getValue(Post.class);
+//
+                            if (post != null) {
+                                // Create Map (from your DataSnapshot) to get values you need easily
+                                Map<String, Object> firebasePostMap = (HashMap<String, Object>) singlePostSnapshot.getValue();
 
-                            post.setAlbum_image(firebasePostMap.get(getString(R.string.firebase_album_image)).toString());
-                            post.setPost_description(firebasePostMap.get(getString(R.string.firebase_post_description)).toString());
-                            post.setSong_preview(firebasePostMap.get(getString(R.string.firebase_song_preview)).toString());
+                                // Configure Post object
+                                post.setArtist_name(firebasePostMap.get(getString(R.string.firebase_artist_name)).toString());
+                                post.setSong_name(firebasePostMap.get(getString(R.string.firebase_song_name)).toString());
 
-                            mPosts.add(post);
+                                post.setAlbum_image(firebasePostMap.get(getString(R.string.firebase_album_image)).toString());
+                                post.setPost_description(firebasePostMap.get(getString(R.string.firebase_post_description)).toString());
+                                post.setSong_preview(firebasePostMap.get(getString(R.string.firebase_song_preview)).toString());
+
+                                mPosts.add(post);
+                            }
+
+
                         }
+
+
                     }
                     mAdapter.setPosts(mPosts);
                 }
@@ -179,7 +157,7 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
                 }
             });
         }
-    }
+
 
 
 //    //adds the  3 tabs at the top: camera, home, and messages
