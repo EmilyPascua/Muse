@@ -52,6 +52,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>{
+    // check
 
     private Context mContext = HomeActivity.this;
     private  static  final String TAG = "HomeActivity";
@@ -65,7 +66,7 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
     private String musicQueryResults;
     private RecyclerView mRecyclerView;
     private MusicAdapter mAdapter;
-    private List<String> mUserIds = new ArrayList<>();
+    private List<String> mFollowingIds = new ArrayList<>();
     private List<Post> mPosts = new ArrayList<>();
 
     //firebase
@@ -101,29 +102,46 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
         setupBottomNavigationView();
 
         //listen for changes from database
+        getFollowing();
         listenAndLoad();
 
 //        setupViewPager();
     }
 
+    public void getFollowing() {
+        Query query = mDatabaseReference.child(getString(R.string.firebase_following)).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onChange1:" + dataSnapshot.getKey());
+                List<String> following = new ArrayList<>();
 
+                for(DataSnapshot singlePostSnapshot : dataSnapshot.getChildren()) {
+                    Log.e("found user:","! " + singlePostSnapshot.getKey());
+
+                    following.add(singlePostSnapshot.child(getString(R.string.firebase_user_id)).getValue().toString());
+                }
+                mFollowingIds = following;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
 
     public void listenAndLoad() {
+        Query query = mDatabaseReference.child(getString(R.string.firebase_user_posts));
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
 
-        
-            Query query = mDatabaseReference.child(getString(R.string.firebase_user_posts) );
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onChange2:" + dataSnapshot.getKey());
 
+                for(DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
+                    String postUId = singleSnapshot.getKey();
 
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Log.d(TAG, "onChange:" + dataSnapshot.getKey());
-
-                    for(DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
-
-                        for(DataSnapshot singlePostSnapshot : singleSnapshot.getChildren()) {
-
+                    if (mFollowingIds.contains(postUId)) {
+                        for (DataSnapshot singlePostSnapshot : singleSnapshot.getChildren()) {
                             Post post = singlePostSnapshot.getValue(Post.class);
 //
                             if (post != null) {
@@ -140,23 +158,20 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
 
                                 mPosts.add(post);
                             }
-
-
                         }
-
-
                     }
-                    mAdapter.setPosts(mPosts);
                 }
+                mAdapter.setPosts(mPosts);
+            }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Log.w(TAG, "postTracks:onCancelled", databaseError.toException());
-                    Toast.makeText(mContext, "Failed to load tracks.",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "postTracks:onCancelled", databaseError.toException());
+                Toast.makeText(mContext, "Failed to load tracks.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 
 
