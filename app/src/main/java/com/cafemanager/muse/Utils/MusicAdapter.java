@@ -99,14 +99,21 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicHolder>
 
         void bind(final int position) {
 //            Picasso.with(mContext).load(mTrack.get(listIndex).getAlbumUrl()).into(albumUrl);
-            Picasso.get().load(mPosts.get(position).getAlbum_image()).into(mAlbumImageView);
+
+//            Picasso.get().load(mPosts.get(position).getAlbum_image()).into(mAlbumImageView);
+
+            Picasso.get()
+                    .load(mPosts.get(position).getAlbum_image())
+                    .placeholder(R.drawable.ic_music)
+                    .error(R.drawable.ic_error)
+                    .into(mAlbumImageView);
 
             createMediaPlayer(mPosts.get(position).getSong_preview());
             triggerPlayButton();
 
             mTrackNameTextView.setText(mPosts.get(position).getSong_name());
             mTrackArtistTextView.setText(mPosts.get(position).getArtist_name());
-            mDescription.append(mPosts.get(position).getPost_description());
+            mDescription.setText(mPosts.get(position).getPost_description());
 
         }
 
