@@ -34,12 +34,16 @@
     <string name="firebase_username">username</string>
     <string name="firebase_user_id">user_id</string>
 
+
     <!--Hints-->
     <string name="hint_search">Search&#8230;</string>
 
     <!--Firebase Auth-->
     <string name="auth_failed">Failed to Authenticate</string>
     <string name="auth_success">Authentication Success</string>
+
+
+
 
 
 

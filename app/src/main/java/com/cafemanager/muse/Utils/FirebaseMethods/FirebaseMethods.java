@@ -45,25 +45,39 @@ public class FirebaseMethods {
         }
     }
 
+    public void updateUsername(String username){
+        Log.d(TAG, "updateUsername: upadting username to: " + username);
 
-    public boolean checkIfUsernameExists(String username, DataSnapshot dataSnapshot){
-        Log.d(TAG, "checkIfUsernameExists: checking if " + username + " already exists");
+        mMyRef.child(mContext.getString(R.string.firebase_users))
+                .child(mUserID)
+                .child(mContext.getString(R.string.firebase_username))
+                .setValue(username);
 
-        User user = new User();
-
-        for (DataSnapshot ds: dataSnapshot.child(mUserID).getChildren()){
-            Log.d(TAG, "checkIfUsernameExists: datasnapshot: " + ds);
-
-            user.setUsername(ds.getValue(User.class).getUsername());
-
-            if(StringManipulation.expandUsername(user.getUsername()).equals(username)){
-                Log.d(TAG, "checkIfUsernameExists: found an existing username " + user.getUsername() );
-
-                return  true;
-            }
-        }
-        return false;
+        mMyRef.child(mContext.getString(R.string.firebase_user_account_settings))
+                .child(mUserID)
+                .child(mContext.getString(R.string.firebase_username))
+                .setValue(username);
     }
+
+
+//    public boolean checkIfUsernameExists(String username, DataSnapshot dataSnapshot){
+//        Log.d(TAG, "checkIfUsernameExists: checking if " + username + " already exists");
+//
+//        User user = new User();
+//
+//        for (DataSnapshot ds: dataSnapshot.child(mUserID).getChildren()){
+//            Log.d(TAG, "checkIfUsernameExists: datasnapshot: " + ds);
+//
+//            user.setUsername(ds.getValue(User.class).getUsername());
+//
+//            if(StringManipulation.expandUsername(user.getUsername()).equals(username)){
+//                Log.d(TAG, "checkIfUsernameExists: found an existing username " + user.getUsername() );
+//
+//                return  true;
+//            }
+//        }
+//        return false;
+//    }
 
 
     /**
@@ -111,7 +125,7 @@ public class FirebaseMethods {
                 0,
                 0,
                 0,
-                "",
+                profile_picture,
                 StringManipulation.condenseUsername(username),
                 website,
                 mUserID);
