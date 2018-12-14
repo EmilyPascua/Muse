@@ -21,6 +21,9 @@ import android.widget.TextView;
 
 import com.cafemanager.muse.Model.Post;
 import com.cafemanager.muse.Model.Track;
+import com.cafemanager.muse.Model.User;
+import com.cafemanager.muse.Model.UserAccountSettings;
+import com.cafemanager.muse.Model.UserSettings;
 import com.cafemanager.muse.R;
 import com.cafemanager.muse.Utils.BottomNavigationViewHelper;
 import com.cafemanager.muse.Utils.MusicAdapter;
@@ -33,10 +36,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.squareup.picasso.Picasso;
+
+import com.cafemanager.muse.Utils.FirebaseMethods.FirebaseMethods;
+import com.cafemanager.muse.Utils.UniversalImageLoader;
+import com.cafemanager.muse.Model.User;
+import com.cafemanager.muse.Model.UserAccountSettings;
+import com.cafemanager.muse.Model.UserSettings;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  *  Copy and Paste. Emily-MergedKevin doesn't have this file.
@@ -56,12 +68,22 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    private FirebaseMethods mFirebaseMethods;
+
 
     // Widgets
     private TextView mPosts, mFollowers, mFollowing;
+
+    private TextView mDisplayName, mUsername, mWebsite, mDescription;
+
     private Toolbar toolbar;
     private ImageView profileMenu;
     private BottomNavigationViewEx bottomNavigationView;
+
+    private CircleImageView mProfilePhoto;
+
+
+
 
 
     // Member Variables
@@ -83,12 +105,23 @@ public class ProfileFragment extends Fragment {
         mFollowers = (TextView) view.findViewById(R.id.tvFollowers);
         mFollowing = (TextView) view.findViewById(R.id.tvFollowing);
 
+        mDisplayName = (TextView) view.findViewById(R.id.display_name);
+        mUsername = (TextView) view.findViewById(R.id.username);
+        mWebsite = (TextView) view.findViewById(R.id.website);
+        mDescription = (TextView) view.findViewById(R.id.description);
+        mProfilePhoto = (CircleImageView) view.findViewById(R.id.profile_photo);
+        mPosts = (TextView) view.findViewById(R.id.tvPosts);
+
+        mProfilePhoto = (CircleImageView) view.findViewById(R.id.profile_photo);
+
         toolbar = (Toolbar) view.findViewById(R.id.profileToolBar);
         profileMenu = (ImageView) view.findViewById(R.id.profileMenu);
         bottomNavigationView = (BottomNavigationViewEx) view.findViewById(R.id.bottomNavViewBar);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.music_recycler_view);
         mContext = getActivity();
+
+        mFirebaseMethods = new FirebaseMethods(getActivity());
 
 
         setupFirebaseAuth();
@@ -136,6 +169,32 @@ public class ProfileFragment extends Fragment {
         });
 
         return view;
+    }
+
+
+
+    private void setProfileWidgets(UserSettings userSettings){
+        Log.d(TAG, "setProfileWidgets: setting widgets with data retrieving from firebase database: " + userSettings.toString());
+        Log.d(TAG, "setProfileWidgets: setting widgets with data retrieving from firebase database: " + userSettings.getSettings().getUsername());
+        //User user = userSettings.getUser();
+        UserAccountSettings settings = userSettings.getSettings();
+//        UniversalImageLoader.setImage(settings.getProfile_photo(), mProfilePhoto, null, "");
+
+        Picasso.get()
+                .load(settings.getProfile_photo())
+                .placeholder(R.drawable.ic_androidplaceholder)
+                .into(mProfilePhoto);
+
+        mDisplayName.setText(settings.getDisplay_name());
+        mUsername.setText(settings.getUsername());
+        mWebsite.setText(settings.getWebsite());
+        mDescription.setText(settings.getDescription());
+        mPosts.setText(String.valueOf(settings.getPosts()));
+
+        //  Don't need these 2 because it's already handled in methods below
+//        mFollowing.setText(String.valueOf(settings.getFollowing()));
+//        mFollowers.setText(String.valueOf(settings.getFollowers()));
+//        mProgressBar.setVisibility(View.GONE);
     }
 
     private void setupRecyclerView() {
@@ -326,6 +385,9 @@ public class ProfileFragment extends Fragment {
         Log.d(TAG, "setupFirebaseAuth: setting up firebase auth");
 
         mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
+
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -340,6 +402,24 @@ public class ProfileFragment extends Fragment {
 
             }
         };
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                //retrieve user information from the database
+                Log.d(TAG, "Value of snapshot " + dataSnapshot.getValue());
+                setProfileWidgets(mFirebaseMethods.getUserSettings(dataSnapshot));
+
+                //retrieve images for the user in question
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
