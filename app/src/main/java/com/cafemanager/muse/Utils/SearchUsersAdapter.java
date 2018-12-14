@@ -108,10 +108,12 @@ public class SearchUsersAdapter extends RecyclerView.Adapter<SearchUsersAdapter.
         public void onClick(View view) {
             int position = getAdapterPosition();
 
+            Log.d(TAG, "User clicked: " + mSearchUsers.get(position));
 
             Intent intent = new Intent(mContext, ProfileActivity.class);
             intent.putExtra(mContext.getString(R.string.calling_activity), mContext.getString(R.string.search_activity));
             intent.putExtra(mContext.getString(R.string.intent_user), mSearchUsers.get(position));
+
             mContext.startActivity(intent);
 
 //            Toast.makeText(mContext, "Position clicked: " + position,
